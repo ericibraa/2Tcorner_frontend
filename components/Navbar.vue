@@ -1,16 +1,11 @@
 <template>
   <v-app-bar color="white" app>
-    <div class="d-flex">
+    <v-toolbar-title class="pr-10 pl-7" v-if="$vuetify.breakpoint.smAndUp">
       <v-img
-        :src="require('~/assets/images/logo/2tcorner.jpg')"
-        height="50px"
+        :src="require('~/assets/images/logo/2tcorner 1.png')"
         contain
-        width="50px"
-        position="top left"
+        max-width="100"
       />
-    </div>
-
-    <v-spacer></v-spacer>
-    <v-app-bar-nav-icon class="hidden-md-and-up" />
+    </v-toolbar-title>
   </v-app-bar>
 </template>

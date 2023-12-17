@@ -2,7 +2,7 @@
   <v-app>
    <Navbar />
     <v-main>
-      <v-container fluid>
+      <v-container>
         <Nuxt />
       </v-container>
     </v-main>
