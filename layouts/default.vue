@@ -1,11 +1,9 @@
 <template>
   <v-app>
-   <Navbar />
+    <Navbar />
     <v-main>
-      <v-container>
-        <Nuxt />
-      </v-container>
+      <Nuxt />
     </v-main>
-   <Footer/>
+    <Footer />
   </v-app>
 </template>
