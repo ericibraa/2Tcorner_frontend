@@ -9,13 +9,126 @@
         show-arrows-on-hover
         width="100%"
         height="100%"
+        class="slider"
       >
         <v-carousel-item>
           <v-img
-            :src="require('~/assets/images/staticImg/MainBanner.png')"
+            :src="require('~/assets/images/staticImg/MainBannerRev.png')"
           ></v-img>
         </v-carousel-item>
       </v-carousel>
+    </div>
+    <div class="merekSearch">
+      <v-container>
+        <div class="shadowSearch">
+          <v-card flat rounded="xxl">
+            <v-row>
+              <v-col cols="8">
+                <v-card-text>
+                  <p class="text-h6 font-weight-bold black--text">
+                    Mau cari motor?
+                  </p>
+                  <v-text-field
+                    label="Cari motor berdasarkan brand, model, dll"
+                    class="mb-5"
+                    outlined
+                    hide-details
+                    dense
+                  ></v-text-field>
+                  <v-img
+                    :src="require('~/assets/images/staticImg/example.png')"
+                  ></v-img>
+                  <v-slide-group show-arrows="never" class="mt-5">
+                    <v-slide-item
+                      v-for="merk of merkKendaraan"
+                      :key="merk.value"
+                    >
+                      <div>
+                        <v-img
+                          :src="merk.src"
+                          max-height="40"
+                          width="95"
+                          contain
+                        ></v-img>
+                        <p class="text-center text-caption mt-2">
+                          {{ merk.name }}
+                        </p>
+                      </div>
+                    </v-slide-item>
+                  </v-slide-group>
+                  <v-slide-group show-arrows="never">
+                    <v-slide-item
+                      v-for="tipe of tipeKendaraan"
+                      :key="tipe.value"
+                    >
+                      <div>
+                        <v-img
+                          :src="
+                            tipe.src
+                              ? tipe.src
+                              : require('~/assets/images/staticImg/x-image.png')
+                          "
+                          max-height="40"
+                          width="95"
+                          contain
+                        ></v-img>
+                        <p class="text-center text-caption mt-2">
+                          {{ tipe.name }}
+                        </p>
+                      </div>
+                    </v-slide-item>
+                  </v-slide-group>
+                </v-card-text>
+              </v-col>
+              <v-divider vertical inset class="my-10"></v-divider>
+              <v-col cols="4">
+                <v-card-text>
+                  <p class="text-h6 font-weight-bold black--text">
+                    Cari motor berdasarkan kategori
+                  </p>
+                  <v-select
+                    :items="listMesin"
+                    label="Mesin"
+                    item-text="name"
+                    item-value="value"
+                    outlined
+                    dense
+                    hide-details
+                    class="mb-5"
+                  ></v-select>
+                  <v-text-field
+                    label="CC"
+                    outlined
+                    hide-details
+                    dense
+                    class="mb-5"
+                  ></v-text-field>
+                  <v-text-field
+                    label="Tahun"
+                    outlined
+                    hide-details
+                    dense
+                    class="mb-5"
+                  ></v-text-field>
+                  <v-select
+                    :items="listGrade"
+                    label="Grade"
+                    item-text="name"
+                    item-value="value"
+                    outlined
+                    dense
+                    hide-details
+                    class="mb-5"
+                  ></v-select>
+                  <v-btn block color="#F1363D" dark rounded
+                    >Cari kendaraan</v-btn
+                  >
+                </v-card-text>
+              </v-col>
+            </v-row>
+          </v-card>
+        </div>
+      </v-container>
     </div>
     <div class="shadow-box my-5">
       <v-container class="py-5">
@@ -53,135 +166,9 @@
         </v-slide-group>
       </v-container>
     </div>
-    <v-container>
-      <v-row class="pb-5">
-        <v-col cols="12" lg="8">
-          <v-card elevation="2">
-            <v-card-text class="pb-0">
-              <p class="text-body-1 mb-0">Merek Motor Populer</p>
-            </v-card-text>
-            <v-card-text class="d-flex pt-2 pb-5">
-              <div
-                class="merk-button mr-3"
-                v-for="merk of merkKendaraan"
-                :key="merk.value"
-              >
-                <v-img :src="merk.src" contain class="mx-1 my-5"></v-img>
-              </div>
-            </v-card-text>
-            <v-card-text class="pb-0">
-              <p class="text-body-1 mb-0">Tipe motor yang ingin dicari</p>
-            </v-card-text>
-            <v-card-text class="d-flex flex-wrap pt-2">
-              <div
-                class="tipe-kendaraan d-flex"
-                v-for="tipe of tipeKendaraan"
-                :key="tipe.value"
-                @click="tipekend(tipe.href)"
-              >
-                <v-img
-                  :src="
-                    tipe.src
-                      ? tipe.src
-                      : require('~/assets/images/staticImg/x-image.png')
-                  "
-                  max-height="40"
-                  max-width="40"
-                  contain
-                  class="my-auto ml-2 mr-4"
-                ></v-img>
-                <p class="my-auto mr-2">{{ tipe.name }}</p>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12" lg="4">
-          <v-card elevation="2">
-            <v-card-text>
-              <v-text-field
-                label="Cari kendaraan"
-                class="mb-5"
-                outlined
-                hide-details
-                dense
-              ></v-text-field>
-              <div class="d-flex mb-5">
-                <v-text-field
-                  label="Merk"
-                  class="mr-1"
-                  outlined
-                  hide-details
-                  dense
-                ></v-text-field>
-                <v-text-field
-                  label="Tipe"
-                  class="ml-1"
-                  outlined
-                  hide-details
-                  dense
-                ></v-text-field>
-              </div>
-              <v-row class="">
-                <v-col class="pr-1">
-                  <v-select
-                    :items="listMesin"
-                    label="Mesin"
-                    item-text="name"
-                    item-value="value"
-                    outlined
-                    dense
-                    hide-details
-                  ></v-select>
-                </v-col>
-                <v-col class="pl-1">
-                  <v-text-field
-                    label="CC"
-                    outlined
-                    hide-details
-                    dense
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <div class="d-flex my-5">
-                <v-text-field
-                  label="Tahun"
-                  class="mr-1"
-                  outlined
-                  hide-details
-                  dense
-                ></v-text-field>
-                <v-text-field
-                  label="Jumlah KM"
-                  class="ml-1"
-                  outlined
-                  hide-details
-                  dense
-                ></v-text-field>
-              </div>
-              <div class="d-flex">
-                <v-select
-                  :items="listGrade"
-                  label="Grade"
-                  item-text="name"
-                  item-value="value"
-                  outlined
-                  dense
-                  hide-details
-                ></v-select>
-              </div>
-            </v-card-text>
-            <v-card-text>
-              <v-btn block color="#F1363D" dark rounded>Cari kendaraan</v-btn>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-card elevation="2" class="mt-5">
-      <v-card-text class="pb-5">
-        <p class="text-body-1 mb-0">Rekomendasi Sparepart</p>
-      </v-card-text>
-      <v-card-text class="pt-0">
+    <div class="shadow-box my-5">
+      <v-container class="py-5">
+        <p class="text-h6">Sparepart</p>
         <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
           <v-slide-item
             v-for="(product, i) of listSparepart"
@@ -214,80 +201,8 @@
             </a>
           </v-slide-item>
         </v-slide-group>
-      </v-card-text>
-    </v-card>
-    <!-- <v-card elevation="2" class="mt-5">
-      <v-card-text class="pb-5">
-        <p class="text-body-1 mb-0">Rekomendasi Merchandise</p>
-      </v-card-text>
-      <v-card-text class="pt-0">
-        <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
-          <v-slide-item v-for="product of listMerchandise" :key="product.name">
-            <a>
-              <v-card
-                width="172"
-                height="275"
-                rounded="lg"
-                style="overflow: hidden"
-                class="ma-3"
-              >
-                <v-card-text class="box pa-0" style="overflow: hidden">
-                  <v-img :src="product.src" aspect-ratio="1"></v-img>
-                  <p class="product-name text-caption mt-1 mx-2 mb-0">
-                    {{ product.name }}
-                  </p>
-                  <p class="text-body-2 mx-2 mb-2 mt-1 red--text">
-                    {{ product.price }}
-                  </p>
-                  <div class="d-flex mx-2">
-                    <v-icon size="14px">mdi-map-marker</v-icon>
-                    <p class="text-caption font-weight-light mt-auto mb-0 ml-2">
-                      {{ product.location }}
-                    </p>
-                  </div>
-                </v-card-text>
-              </v-card>
-            </a>
-          </v-slide-item>
-        </v-slide-group>
-      </v-card-text>
-    </v-card>
-    <v-card elevation="2" class="mt-5">
-      <v-card-text class="pb-5">
-        <p class="text-body-1 mb-0">Rekomendasi Accessories</p>
-      </v-card-text>
-      <v-card-text class="pt-0">
-        <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
-          <v-slide-item v-for="product of listAccessories" :key="product.name">
-            <a>
-              <v-card
-                width="172"
-                height="275"
-                rounded="lg"
-                style="overflow: hidden"
-                class="ma-3"
-              >
-                <v-card-text class="box pa-0" style="overflow: hidden">
-                  <v-img :src="product.src" aspect-ratio="1"></v-img>
-                  <p class="product-name text-caption mt-1 mx-2 mb-0">
-                    {{ product.name }}
-                  </p>
-                  <p class="text-body-2 mx-2 mb-2 mt-1 red--text">
-                    {{ product.price }}
-                  </p>
-                  <div class="d-flex mx-2">
-                    <v-icon size="14px">mdi-map-marker</v-icon>
-                    <p class="text-caption font-weight-light mt-auto mb-0 ml-2">
-                      {{ product.location }}
-                    </p>
-                  </div>
-                </v-card-text>
-              </v-card>
-            </a>
-          </v-slide-item>
-        </v-slide-group>
-      </v-card-text>
-    </v-card> -->
+      </v-container>
+    </div>
     <div class="shadow-box my-5">
       <v-container class="py-5">
         <p class="text-h6">Berita Otomotif</p>
@@ -335,37 +250,6 @@
             </a>
           </v-slide-item>
         </v-slide-group>
-        <!-- <v-card-text class="pb-5">
-        <p class="text-body-1 mb-0">Artikel Trending</p>
-      </v-card-text>
-      <v-card-text class="pt-0">
-        <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
-          <v-slide-item
-            v-for="(article, i) of listNewarticle"
-            :key="article.title + i + '1w'"
-          >
-            <a>
-              <v-card
-                width="327"
-                height="300"
-                rounded="lg"
-                style="overflow: hidden"
-                class="ma-3"
-              >
-                <v-card-text class="box pa-0" style="overflow: hidden">
-                  <v-img :src="article.src" aspect-ratio="2"></v-img>
-                  <p class="text-body-2 font-weight-bold mt-1 mx-2 mb-0">
-                    {{ article.title }}
-                  </p>
-                  <p class="text-caption mx-2 mb-2 mt-1">
-                    {{ article.body }}
-                  </p>
-                </v-card-text>
-              </v-card>
-            </a>
-          </v-slide-item>
-        </v-slide-group>
-      </v-card-text> -->
       </v-container>
     </div>
   </div>
@@ -388,23 +272,21 @@ export default {
       ],
       merkKendaraan: [
         {
+          name: "Yamaha",
           value: "yamaha",
-          src: require("~/assets/images/brandLogo/yamaha.png"),
+          src: require("~/assets/images/brandLogo/yamaha.jpg"),
           href: "",
         },
         {
+          name: "Honda",
           value: "honda",
-          src: require("~/assets/images/brandLogo/yamaha.png"),
+          src: require("~/assets/images/brandLogo/honda.png"),
           href: "",
         },
         {
+          name: "Kawasaki",
           value: "kawasaki",
-          src: require("~/assets/images/brandLogo/yamaha.png"),
-          href: "",
-        },
-        {
-          value: "suzuki",
-          src: require("~/assets/images/brandLogo/yamaha.png"),
+          src: require("~/assets/images/brandLogo/kawasaki.png"),
           href: "",
         },
       ],
@@ -412,7 +294,7 @@ export default {
         {
           value: "sport",
           name: "Sport",
-          src: "",
+          src: require("~/assets/images/logo/icon-touring.png"),
           href: "sport/sport",
         },
         {
@@ -424,7 +306,7 @@ export default {
         {
           value: "bebek",
           name: "Bebek",
-          src: "",
+          src: require("~/assets/images/logo/icon-scooter.png"),
           href: "sport",
         },
         {
@@ -436,7 +318,7 @@ export default {
         {
           value: "moge",
           name: "Moge",
-          src: "",
+          src: require("~/assets/images/logo/icon-touring.png"),
           href: "sport",
         },
         {
@@ -448,19 +330,19 @@ export default {
         {
           value: "moped",
           name: "Moped",
-          src: "",
+          src: require("~/assets/images/logo/icon-motor.png"),
           href: "sport",
         },
         {
           value: "trail",
           name: "Trail",
-          src: "",
+          src: require("~/assets/images/logo/icon-touring.png"),
           href: "sport",
         },
         {
           value: "listrik",
           name: "Listrik",
-          src: "",
+          src: require("~/assets/images/logo/icon-scooter.png"),
           href: "sport",
         },
       ],
@@ -604,106 +486,6 @@ export default {
           src: require("~/assets/images/staticImg/motor3.jpeg"),
         },
       ],
-      listMerchandise: [
-        {
-          name: "Baju 2TCorner",
-          price: "Rp 120.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/merch1.jpg"),
-        },
-        {
-          name: "Topi 2TCorner",
-          price: "Rp 199.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/merch2.jpg"),
-        },
-        {
-          name: "Tote Bag 2TCorner",
-          price: "Rp 29.000",
-          location: "Bandung",
-          src: require("~/assets/images/staticImg/merch3.jpeg"),
-        },
-        {
-          name: "Baju 2TCorner",
-          price: "Rp 120.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/merch1.jpg"),
-        },
-        {
-          name: "Tote Bag 2TCorner",
-          price: "Rp 29.000",
-          location: "Bandung",
-          src: require("~/assets/images/staticImg/merch3.jpeg"),
-        },
-        {
-          name: "Topi 2TCorner",
-          price: "Rp 199.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/merch2.jpg"),
-        },
-        {
-          name: "Topi 2TCorner",
-          price: "Rp 199.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/merch2.jpg"),
-        },
-        {
-          name: "Baju 2TCorner",
-          price: "Rp 120.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/merch1.jpg"),
-        },
-      ],
-      listAccessories: [
-        {
-          name: "Bracket spion bracket HP",
-          price: "Rp 25.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/access2.jpg"),
-        },
-        {
-          name: "Motorcycle Handle Bar Ends Plug Grips",
-          price: "Rp 40.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/access1.jpg"),
-        },
-        {
-          name: "Bracket spion bracket HP",
-          price: "Rp 25.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/access2.jpg"),
-        },
-        {
-          name: "Motorcycle Handle Bar Ends Plug Grips",
-          price: "Rp 40.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/access1.jpg"),
-        },
-        {
-          name: "Bracket spion bracket HP",
-          price: "Rp 25.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/access2.jpg"),
-        },
-        {
-          name: "Motorcycle Handle Bar Ends Plug Grips",
-          price: "Rp 40.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/access1.jpg"),
-        },
-        {
-          name: "Bracket spion bracket HP",
-          price: "Rp 25.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/access2.jpg"),
-        },
-        {
-          name: "Motorcycle Handle Bar Ends Plug Grips",
-          price: "Rp 40.000",
-          location: "Jakarta",
-          src: require("~/assets/images/staticImg/access1.jpg"),
-        },
-      ],
       listNewarticle: [
         {
           title:
@@ -737,8 +519,8 @@ export default {
         },
       ],
       selectedArticle: {
-        id: '001',
-        name: 'Trending'
+        id: "001",
+        name: "Trending",
       },
     };
   },
@@ -749,7 +531,7 @@ export default {
     setArticle(data) {
       if (this.selectedArticle.id != data.id) {
         this.selectedArticle = data;
-        console.log(this.selectedArticle)
+        console.log(this.selectedArticle);
       } else {
         this.selectedArticle = {};
       }
@@ -760,7 +542,15 @@ export default {
 
 <style scoped>
 .carousel {
-  border-radius: 10px;
+  display: block;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
 }
 .merk-button {
   border: solid 1px darkgray !important;
@@ -795,5 +585,16 @@ export default {
   -moz-box-shadow: 0 2px 20px 0 rgba(40, 51, 63, 0.12);
   margin-bottom: 16px;
   position: relative;
+}
+.merekSearch {
+  margin-top: 360px;
+}
+.shadowSearch {
+  box-shadow: 0 2px 20px 0 rgba(40, 51, 63, 0.12);
+  -webkit-box-shadow: 0 2px 20px 0 rgba(40, 51, 63, 0.12);
+  -moz-box-shadow: 0 2px 20px 0 rgba(40, 51, 63, 0.12);
+  margin-bottom: 16px;
+  position: relative;
+  border-radius: 30px;
 }
 </style>
