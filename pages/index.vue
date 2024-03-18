@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="carousel pb-5">
+  <div class="mt-5">
+    <div :class="$vuetify.breakpoint.smAndDown ? '' : 'carousel pb-5'">
       <v-carousel
         cycle
         hide-delimiter-background
@@ -18,12 +18,12 @@
         </v-carousel-item>
       </v-carousel>
     </div>
-    <div class="merekSearch">
+    <div :class="$vuetify.breakpoint.smAndDown ? '' : 'merekSearch'">
       <v-container>
         <div class="shadowSearch">
           <v-card flat rounded="xxl">
             <v-row>
-              <v-col cols="8">
+              <v-col cols="12" md="8">
                 <v-card-text>
                   <p class="text-h6 font-weight-bold black--text">
                     Mau cari motor?
@@ -81,7 +81,7 @@
                 </v-card-text>
               </v-col>
               <v-divider vertical inset class="my-10"></v-divider>
-              <v-col cols="4">
+              <v-col cols="12" md="4">
                 <v-card-text>
                   <p class="text-h6 font-weight-bold black--text">
                     Cari motor berdasarkan kategori
@@ -218,7 +218,6 @@
             :class="
               selectedArticle.id != article.id ? 'black--text' : 'primary--text'
             "
-            style="min-width: 100px"
             class="text-overline mb-0 text-center mx-auto"
           >
             {{ article.name }}

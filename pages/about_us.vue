@@ -1,31 +1,79 @@
 <template>
   <v-container>
     <v-card flat>
-      <v-card-title class="justify-center"
-        ><p class="text-h5 font-weight-bold">About Us</p></v-card-title
-      >
-      <v-card-text>
-        <p>
-          Selamat datang di website kami, terimakasih sudah percaya dengan
-          platform kami untuk bertransaksi aman seluruh Indonesia dan
-          mancanegara. Kami sangat senang dapat memfasilitasi para penggemar
-          motor 2 tak, motor klasik dan motor untuk koleksi. Kami menjunjung
-          tinggi nilai kepercayaan terhadap pelanggan, bagi kami customer adalah
-          raja yang harus dilayani dengan penuh hati. Semoga kami bisa melaju
-          terus dan melalukan yang lebih baik untuk pelayanan pelanggan.
-        </p>
-        <br />
-        <p>
-          Welcome to our website, thank you for trusting our platform for safe
-          transactions throughout Indonesia and abroad. We are very happy to be
-          able to facilitate fans of 2-stroke motorbikes, classic motorbikes and
-          motorbikes for collections. We uphold the value of trust in customers,
-          for us the customer is king who must be served wholeheartedly.
-          Hopefully we can continue and do better for customer service.
-        </p>
-        <br />
-        <p>Regards<br />Owner</p>
+      <v-text-title class="justify-center">
+        <p class="text-h4 font-weight-bold text-center">About Us</p>
+        <div
+          :class="$vuetify.breakpoint.smAndDown ? 'judulMobile' : 'judul'"
+        ></div>
+      </v-text-title>
+      <v-card-text class="pt-15">
+        <v-row>
+          <v-col cols="12" md="6">
+            <div v-if="!$vuetify.breakpoint.smAndDown">
+              <p class="text-h6 font-weight-bold">
+                Selamat datang di website kami
+              </p>
+              <p class="text-body-1">
+                Terima kasih sudah percaya dengan platform kami untuk
+                bertransaksi aman seluruh Indonesia dan mancanegara. Kami sangat
+                senang dapat memfasilitasi para penggemar motor 2 tak, motor
+                klasik dan motor untuk koleksi. Kami menjunjung tinggi nilai
+                kepercayaan terhadap pelanggan, bagi kami customer adalah raja
+                yang harus dilayani dengan penuh hati. Semoga kami bisa melaju
+                terus dan melalukan yang lebih baik untuk pelayanan pelanggan.
+              </p>
+            </div>
+            <v-img
+              :src="require('~/assets/images/logo/2tcorner 1.png')"
+              max-width="200"
+              class="mx-auto"
+              v-else
+            ></v-img>
+          </v-col>
+          <v-col cols="12" md="6" class="text-center">
+            <div v-if="$vuetify.breakpoint.smAndDown">
+              <p class="text-h6 font-weight-bold">
+                Selamat datang di website kami
+              </p>
+              <p class="text-body-1">
+                Terima kasih sudah percaya dengan platform kami untuk
+                bertransaksi aman seluruh Indonesia dan mancanegara. Kami sangat
+                senang dapat memfasilitasi para penggemar motor 2 tak, motor
+                klasik dan motor untuk koleksi. Kami menjunjung tinggi nilai
+                kepercayaan terhadap pelanggan, bagi kami customer adalah raja
+                yang harus dilayani dengan penuh hati. Semoga kami bisa melaju
+                terus dan melalukan yang lebih baik untuk pelayanan pelanggan.
+              </p>
+            </div>
+            <v-img
+              :src="require('~/assets/images/logo/2tcorner 1.png')"
+              max-width="200"
+              class="mx-auto"
+              v-else
+            ></v-img>
+          </v-col>
+        </v-row>
       </v-card-text>
     </v-card>
   </v-container>
 </template>
+<style>
+.about-us {
+  position: relative;
+}
+.content {
+  position: absolute;
+  top: 160px;
+  right: 0;
+  max-width: 450px;
+}
+.judul {
+  border-bottom: solid 4px red;
+  margin: 0 530px;
+}
+.judulMobile {
+  border-bottom: solid 4px red;
+  margin: 0 130px;
+}
+</style>

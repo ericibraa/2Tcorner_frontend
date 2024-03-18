@@ -1,42 +1,67 @@
 <template>
-  <v-app-bar color="white" app>
-    <v-toolbar-title class="pr-10 pl-7" v-if="$vuetify.breakpoint.smAndUp">
-      <a href="/">
-        <v-img
-          :src="require('~/assets/images/logo/2tcorner 1.png')"
-          contain
-          max-width="100"
-        />
-      </a>
-    </v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-card
-      v-for="button of Navbutton"
-      :key="button.name"
-      flat
-      :href="button.href"
-      class="text-center"
-      height="60"
-    >
-      <v-card-text class="text-center">
-        <p class="btnNav">{{ button.name }}</p>
-      </v-card-text>
-    </v-card>
-  </v-app-bar>
+  <v-container>
+    <v-app-bar color="white" app flat elevation="1">
+      <v-app-bar-nav-icon
+        @click.stop="drawer = !drawer"
+        v-if="$vuetify.breakpoint.smAndDown"
+      ></v-app-bar-nav-icon>
+      <v-toolbar-title>
+        <a href="/">
+          <v-img
+            :src="require('~/assets/images/logo/2tcorner 1.png')"
+            contain
+            max-width="100"
+          />
+        </a>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <div v-if="!$vuetify.breakpoint.smAndDown" class="d-flex">
+        <div v-for="button of Navbutton" :key="button.name" class="mr-5">
+          <a :href="button.href">
+            <p class="text-body-2 my-auto">{{ button.name }}</p>
+          </a>
+        </div>
+      </div>
+    </v-app-bar>
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list nav dense>
+        <v-list-item-group>
+          <v-list-item>
+            <v-list-item-title>
+              <a href="/">
+                <p class="text-body-1 font-weight-bold my-auto">2Tcorner</p></a
+              ></v-list-item-title
+            >
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item v-for="button of Navbutton" :key="button.name">
+            <v-list-item-title>
+              <a :href="button.href">
+                <p class="text-body-2 my-auto">
+                  {{ button.name }}
+                </p>
+              </a>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+  </v-container>
 </template>
 <script>
 export default {
   data() {
     return {
+      drawer: false,
       Navbutton: [
         {
           name: "About Us",
           href: "/about_us",
         },
-        {
-          name: "Contact Us",
-          href: "/contact_us",
-        },
+        // {
+        //   name: "Contact Us",
+        //   href: "/contact_us",
+        // },
         {
           name: "Terms and Conditions",
           href: "/tnc",
@@ -55,7 +80,16 @@ export default {
 };
 </script>
 <style>
-.btnNav:hover {
-  color: #f1363d;
+a {
+  text-decoration: none;
+}
+
+a:link,
+a:visited {
+  color: #424242;
+}
+
+a:hover {
+  color: red;
 }
 </style>
