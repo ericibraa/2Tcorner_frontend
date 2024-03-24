@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-app-bar color="white" app flat elevation="1">
+  <div>
+    <v-app-bar color="white" app flat elevation="1" class="px-15">
       <v-app-bar-nav-icon
         @click.stop="drawer = !drawer"
         v-if="$vuetify.breakpoint.smAndDown"
@@ -46,7 +46,7 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-  </v-container>
+  </div>
 </template>
 <script>
 export default {

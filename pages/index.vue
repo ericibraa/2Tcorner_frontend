@@ -251,6 +251,20 @@
         </v-slide-group>
       </v-container>
     </div>
+    <v-card flat class="mt-10">
+      <v-card-title class="justify-center">
+        <p class="text-h4">Our Service</p>
+      </v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="4">
+            <div class="service"></div>
+          </v-col>
+          <v-col cols="4"><div class="service"></div></v-col>
+          <v-col cols="4"><div class="service"></div></v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
@@ -595,5 +609,10 @@ export default {
   margin-bottom: 16px;
   position: relative;
   border-radius: 30px;
+}
+.service {
+  height: 300px;
+  background-color: rgb(226, 226, 226);
+  border-radius: 10px;
 }
 </style>

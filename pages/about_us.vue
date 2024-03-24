@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <v-card flat>
-      <v-text-title class="justify-center">
-        <p class="text-h4 font-weight-bold text-center">About Us</p>
-        <div
-          :class="$vuetify.breakpoint.smAndDown ? 'judulMobile' : 'judul'"
-        ></div>
-      </v-text-title>
+      <v-card-title class="justify-center">
+        <p class="text-h4 font-weight-bold text-center mb-0">About Us</p>
+      </v-card-title>
+      <div
+        :class="$vuetify.breakpoint.smAndDown ? 'judulMobile' : 'judul'"
+      ></div>
       <v-card-text class="pt-15">
         <v-row>
           <v-col cols="12" md="6">
