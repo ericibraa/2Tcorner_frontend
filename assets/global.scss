@@ -1,0 +1,25 @@
+@font-face {
+   font-family: 'Outfit';
+   src: url('~assets/font/Outfit-Regular.ttf') format('truetype');
+}
+
+// Apply font globally
+html, body, .v-application {
+   font-family: 'Outfit', sans-serif !important;
+ }
+ 
+ // Increase specificity for Vuetify typography classes
+ html .v-application .text-body-2,
+ html .v-application .text-body-1,
+ html .v-application .text-h1,
+ html .v-application .text-h2,
+ html .v-application .text-h3,
+ html .v-application .text-h4,
+ html .v-application .text-h5,
+ html .v-application .text-h6,
+ html .v-application .text-subtitle-1,
+ html .v-application .text-subtitle-2,
+ html .v-application .text-overline,
+ html .v-application .text-caption {
+   font-family: 'Outfit', sans-serif !important;
+ }

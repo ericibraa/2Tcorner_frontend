@@ -1,5 +1,7 @@
 <template>
   <div class="mt-5">
+
+    <!-- Carousel Section -->
     <div :class="$vuetify.breakpoint.smAndDown ? '' : 'carousel pb-5'">
       <v-carousel
         cycle
@@ -7,122 +9,80 @@
         continuous
         hide-delimiters
         show-arrows-on-hover
-        width="100%"
-        height="100%"
+        width="1200"
+        height="600"
         class="slider"
       >
         <v-carousel-item>
-          <v-img
-            :src="require('~/assets/images/staticImg/MainBannerRev.png')"
-          ></v-img>
+          <v-img :src="require('~/assets/images/staticImg/MainBannerRev.png')"></v-img>
         </v-carousel-item>
       </v-carousel>
     </div>
+
+    <!-- Merek Search Section -->
     <div :class="$vuetify.breakpoint.smAndDown ? '' : 'merekSearch'">
       <v-container>
         <div class="shadowSearch">
           <v-card flat rounded="xxl">
             <v-row>
-              <v-col cols="12" md="8">
+              <!-- Left Section: Search by Brand -->
+              <v-col cols="12" md="8" class="py-5">
                 <v-card-text>
-                  <p class="text-h6 font-weight-bold black--text">
-                    Mau cari motor?
-                  </p>
+                  <p class="text-h5 mx-5">Mau cari motor?</p>
                   <v-text-field
                     label="Cari motor berdasarkan brand, model, dll"
-                    class="mb-5"
+                    class="form-radius mb-5 mx-5"
                     outlined
                     hide-details
-                    dense
                   ></v-text-field>
                   <v-img
+                    class="mx-5"
                     :src="require('~/assets/images/staticImg/example.png')"
                   ></v-img>
-                  <v-slide-group show-arrows="never" class="mt-5">
-                    <v-slide-item
-                      v-for="merk of merkKendaraan"
-                      :key="merk.value"
-                    >
-                      <div>
-                        <v-img
-                          :src="merk.src"
-                          max-height="40"
-                          width="95"
-                          contain
-                        ></v-img>
-                        <p class="text-center text-caption mt-2">
-                          {{ merk.name }}
-                        </p>
-                      </div>
-                    </v-slide-item>
-                  </v-slide-group>
                   <v-slide-group show-arrows="never">
-                    <v-slide-item
-                      v-for="tipe of tipeKendaraan"
-                      :key="tipe.value"
-                    >
-                      <div>
+                    <v-slide-item v-for="tipe of tipeKendaraan" :key="tipe.value">
+                      <div class="mt-7">
                         <v-img
-                          :src="
-                            tipe.src
-                              ? tipe.src
-                              : require('~/assets/images/staticImg/x-image.png')
-                          "
-                          max-height="40"
-                          width="95"
+                          :src="tipe.src ? tipe.src : require('~/assets/images/staticImg/x-image.png')"
+                          max-height="60"
+                          width="125"
                           contain
                         ></v-img>
-                        <p class="text-center text-caption mt-2">
-                          {{ tipe.name }}
-                        </p>
+                        <p class="text-center text-body-2 my-2">{{ tipe.name }}</p>
                       </div>
                     </v-slide-item>
                   </v-slide-group>
                 </v-card-text>
               </v-col>
-              <v-divider vertical inset class="my-10"></v-divider>
-              <v-col cols="12" md="4">
+
+              <!-- Divider -->
+              <v-divider vertical class="my-5"></v-divider>
+
+              <!-- Right Section: Search by Category -->
+              <v-col cols="12" md="4" class="py-5 pr-10">
                 <v-card-text>
-                  <p class="text-h6 font-weight-bold black--text">
-                    Cari motor berdasarkan kategori
-                  </p>
+                  <p class="text-h5">Cari motor berdasarkan kategori?</p>
                   <v-select
                     :items="listMesin"
                     label="Mesin"
                     item-text="name"
                     item-value="value"
                     outlined
-                    dense
                     hide-details
-                    class="mb-5"
+                    class="form-radius mb-5"
                   ></v-select>
-                  <v-text-field
-                    label="CC"
-                    outlined
-                    hide-details
-                    dense
-                    class="mb-5"
-                  ></v-text-field>
-                  <v-text-field
-                    label="Tahun"
-                    outlined
-                    hide-details
-                    dense
-                    class="mb-5"
-                  ></v-text-field>
+                  <v-text-field label="CC" outlined hide-details class="mb-5 form-radius"></v-text-field>
+                  <v-text-field label="Tahun" outlined hide-details class="mb-5 form-radius"></v-text-field>
                   <v-select
                     :items="listGrade"
                     label="Grade"
                     item-text="name"
                     item-value="value"
                     outlined
-                    dense
                     hide-details
-                    class="mb-5"
+                    class="mb-5 form-radius"
                   ></v-select>
-                  <v-btn block color="#F1363D" dark rounded
-                    >Cari kendaraan</v-btn
-                  >
+                  <v-btn block color="#F1363D" dark rounded class="py-6">Cari kendaraan</v-btn>
                 </v-card-text>
               </v-col>
             </v-row>
@@ -130,35 +90,96 @@
         </div>
       </v-container>
     </div>
+
+    <!-- Popular Motor Section -->
+    <v-container class="py-5">
+      <p class="text-h6">Motor Populer</p>
+      <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
+        <v-slide-item v-for="(product, i) of listMotor" :key="product.name + i">
+          <v-card width="320" height="440" rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product.slug">
+            <v-img :src="product.src" max-height="250"></v-img>
+            <v-card-text class="pa-4">
+              <p class="product-name text-h6 font-weight-medium mb-2">{{ product.name }}</p>
+              <p class="text-h5 font-weight-bold primary--text mb-3">{{ product.price }}</p>
+              <div class="d-flex align-center grey--text text-body-2 mb-3">
+                <v-icon class="mr-1" size="18">mdi-map-marker</v-icon> {{ product.location }}
+              </div>
+              <div class="d-flex flex-wrap">
+                <v-chip outlined class="mr-1 mb-2" small>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.merek }}</p>
+                </v-chip>
+                <v-chip outlined class="mr-1 mb-2" small>
+                  <v-icon size="16" class="mr-1 grey--text">mdi-speedometer</v-icon>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.kilometer }}</p>
+                </v-chip>
+                <v-chip outlined class="mr-1 mb-2" small>
+                  <v-icon size="16" class="mr-1 grey--text">mdi-calendar-month</v-icon>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.tahun }}</p>
+                </v-chip>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-slide-item>
+      </v-slide-group>
+    </v-container>
+
+    <!-- Sparepart Section -->
+    <v-container class="py-5">
+      <p class="text-h6">Sparepart</p>
+      <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
+        <v-slide-item v-for="(sparepart, i) of listSparepart" :key="sparepart.name + i">
+          <a>
+            <v-card width="320" height="440" rounded="xxl" class="shadow-box-card ma-4" :href="'/sparepart/' + sparepart.slug">
+              <v-img :src="sparepart.src" max-height="250"></v-img>
+              <v-card-text class="pa-4">
+                <p class="product-name text-h6 font-weight-medium mb-2">{{ sparepart.name }}</p>
+                <p class="text-h5 font-weight-bold primary--text mb-3">{{ sparepart.price }}</p>
+                <div class="d-flex align-center grey--text text-body-2 mb-3">
+                  <v-icon class="mr-1" size="18">mdi-map-marker</v-icon> {{ sparepart.location }}
+                </div>
+                <div class="d-flex flex-wrap">
+                  <v-chip outlined class="mr-1 mb-2" small>
+                    <p class="text-caption font-weight-medium my-auto">{{ sparepart.merek }}</p>
+                  </v-chip>
+                  <v-chip outlined class="mr-1 mb-2" small>
+                    <v-icon size="16" class="mr-1 grey--text">mdi-calendar-month</v-icon>
+                    <p class="text-caption font-weight-medium my-auto">{{ sparepart.tahun }}</p>
+                  </v-chip>
+                </div>
+              </v-card-text>
+            </v-card>
+          </a>
+        </v-slide-item>
+      </v-slide-group>
+    </v-container>
+
+    <!-- Berita Otomotif Section -->
     <div class="shadow-box my-5">
       <v-container class="py-5">
-        <p class="text-h6">Motor Populer</p>
-        <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
-          <v-slide-item
-            v-for="(product, i) of listMotor"
-            :key="product.name + i"
-          >
-            <v-card
-              width="172"
-              height="275"
-              rounded="lg"
-              style="overflow: hidden"
-              class="ma-3 mt-0"
-              :href="'/product/' + product.slug"
-            >
-              <v-card-text class="box pa-0" style="overflow: hidden">
-                <v-img :src="product.src" aspect-ratio="1"></v-img>
-                <p class="product-name text-caption mt-1 mx-2 mb-0">
-                  {{ product.name }}
+        <p class="text-h6">Berita Otomotif</p>
+        <div class="mb-4">
+          <v-chip v-for="article in articles" :key="article.id"
+            :color="selectedArticle.id === article.id ? 'primary' : ''" @click="setArticle(article)"
+            :outlined="selectedArticle.id !== article.id" class="text-center mr-2 mb-2">
+            <p :class="selectedArticle.id !== article.id ? 'black--text' : 'white--text'"
+              class="text-overline mb-0 text-center mx-auto">
+              {{ article.name }}
+            </p>
+          </v-chip>
+        </div>
+        <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp" class="mb-4">
+          <v-slide-item v-for="(article, i) of listNewarticle" :key="article.title + i">
+            <v-card width="400" height="380" rounded="xxl" class="shadow-box-card ma-4 overflow-hidden"
+              :href="'/article/' + article.slug" elevation="2">
+              <v-img :src="article.src" max-height="200" class="rounded-t-xl"></v-img>
+              <v-card-text class="pa-4">
+                <p class="text-h6 font-weight-bold mt-2 mb-1" style="max-width: 100%; overflow: hidden;">
+                  {{ article.title }}
                 </p>
-                <p class="text-body-2 mx-2 mb-2 mt-1 red--text">
-                  {{ product.price }}
-                </p>
-                <div class="d-flex mx-2">
-                  <v-icon size="14px">mdi-map-marker</v-icon>
-                  <p class="text-caption font-weight-light mt-auto mb-0 ml-2">
-                    {{ product.location }}
-                  </p>
+                <v-divider></v-divider>
+                <div class="d-flex justify-space-between mt-2">
+                  <v-btn text class="text-caption grey--text">Read more</v-btn>
+                  <v-icon size="20" class="grey--text">mdi-arrow-right</v-icon>
                 </div>
               </v-card-text>
             </v-card>
@@ -166,107 +187,31 @@
         </v-slide-group>
       </v-container>
     </div>
-    <div class="shadow-box my-5">
-      <v-container class="py-5">
-        <p class="text-h6">Sparepart</p>
-        <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
-          <v-slide-item
-            v-for="(product, i) of listSparepart"
-            :key="product.name + i"
-          >
-            <a>
-              <v-card
-                width="172"
-                height="275"
-                rounded="lg"
-                style="overflow: hidden"
-                class="ma-3"
-              >
-                <v-card-text class="box pa-0" style="overflow: hidden">
-                  <v-img :src="product.src" aspect-ratio="1"></v-img>
-                  <p class="product-name text-caption mt-1 mx-2 mb-0">
-                    {{ product.name }}
-                  </p>
-                  <p class="text-body-2 mx-2 mb-2 mt-1 red--text">
-                    {{ product.price }}
-                  </p>
-                  <div class="d-flex mx-2">
-                    <v-icon size="14px">mdi-map-marker</v-icon>
-                    <p class="text-caption font-weight-light mt-auto mb-0 ml-2">
-                      {{ product.location }}
-                    </p>
-                  </div>
-                </v-card-text>
-              </v-card>
-            </a>
-          </v-slide-item>
-        </v-slide-group>
+
+    <!-- Service Section -->
+     <v-container>
+       <v-card flat class="my-10">
+         <v-card-title class="justify-center">
+           <p class="text-h4">Our Service</p>
+          </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col cols="4">
+                <div class="service"></div>
+              </v-col>
+              <v-col cols="4">
+                <div class="service"></div>
+              </v-col>
+              <v-col cols="4">
+                <div class="service"></div>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
       </v-container>
-    </div>
-    <div class="shadow-box my-5">
-      <v-container class="py-5">
-        <p class="text-h6">Berita Otomotif</p>
-        <v-chip
-          v-for="article in articles"
-          :key="article.id"
-          :color="selectedArticle.id == article.id ? 'light' : ''"
-          @click="setArticle(article)"
-          :outlined="selectedArticle.id != article.id"
-          class="text-center mr-2"
-        >
-          <p
-            :class="
-              selectedArticle.id != article.id ? 'black--text' : 'primary--text'
-            "
-            class="text-overline mb-0 text-center mx-auto"
-          >
-            {{ article.name }}
-          </p>
-        </v-chip>
-        <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
-          <v-slide-item
-            v-for="(article, i) of listNewarticle"
-            :key="article.title + i"
-          >
-            <a>
-              <v-card
-                width="327"
-                height="300"
-                rounded="lg"
-                style="overflow: hidden"
-                class="ma-3"
-              >
-                <v-card-text class="box pa-0" style="overflow: hidden">
-                  <v-img :src="article.src" aspect-ratio="2"></v-img>
-                  <p class="text-body-2 font-weight-bold mt-1 mx-2 mb-0">
-                    {{ article.title }}
-                  </p>
-                  <p class="text-caption mx-2 mb-2 mt-1">
-                    {{ article.body }}
-                  </p>
-                </v-card-text>
-              </v-card>
-            </a>
-          </v-slide-item>
-        </v-slide-group>
-      </v-container>
-    </div>
-    <v-card flat class="mt-10">
-      <v-card-title class="justify-center">
-        <p class="text-h4">Our Service</p>
-      </v-card-title>
-      <v-card-text>
-        <v-row>
-          <v-col cols="4">
-            <div class="service"></div>
-          </v-col>
-          <v-col cols="4"><div class="service"></div></v-col>
-          <v-col cols="4"><div class="service"></div></v-col>
-        </v-row>
-      </v-card-text>
-    </v-card>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -396,48 +341,64 @@ export default {
           name: "Sparepart body Vario 125 CC 2019",
           price: "Rp 50.000",
           location: "Depok",
+          merek: "Honda",
+          tahun: "2014",
           src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
         },
         {
           name: "Sparepart body Vario 125 CC 2019",
           price: "Rp 50.000",
           location: "Depok",
+          merek: "Honda",
+          tahun: "2014",
           src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
         },
         {
           name: "Sparepart body Vario 125 CC 2019",
           price: "Rp 50.000",
           location: "Depok",
+          merek: "Honda",
+          tahun: "2014",
           src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
         },
         {
           name: "Sparepart body Vario 125 CC 2019",
           price: "Rp 50.000",
           location: "Depok",
+          merek: "Honda",
+          tahun: "2014",
           src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
         },
         {
           name: "Sparepart body Vario 125 CC 2019",
           price: "Rp 50.000",
           location: "Depok",
+          merek: "Honda",
+          tahun: "2014",
           src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
         },
         {
           name: "Sparepart body Vario 125 CC 2019",
           price: "Rp 50.000",
           location: "Depok",
+          merek: "Honda",
+          tahun: "2014",
           src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
         },
         {
           name: "Sparepart body Vario 125 CC 2019",
           price: "Rp 50.000",
           location: "Depok",
+          merek: "Honda",
+          tahun: "2014",
           src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
         },
         {
           name: "Sparepart body Vario 125 CC 2019",
           price: "Rp 50.000",
           location: "Depok",
+          merek: "Honda",
+          tahun: "2014",
           src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
         },
       ],
@@ -447,6 +408,9 @@ export default {
           slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
           price: "Rp 29.500.000",
           location: "Tangerang",
+          tahun: "2020",
+          kilometer: "45.000 KM",
+          merek: "Kawasaki",
           src: require("~/assets/images/staticImg/motor1.jpeg"),
         },
         {
@@ -454,6 +418,9 @@ export default {
           slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
           price: "Rp 20.000.000",
           location: "Jakarta",
+          tahun: "2020",
+          kilometer: "45.000 KM",
+          merek: "Kawasaki",
           src: require("~/assets/images/staticImg/motor2.jpeg"),
         },
         {
@@ -461,6 +428,9 @@ export default {
           slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
           price: "Rp 50.000.000",
           location: "Bandung",
+          tahun: "2020",
+          kilometer: "45.000 KM",
+          merek: "Kawasaki",
           src: require("~/assets/images/staticImg/motor3.jpeg"),
         },
         {
@@ -468,6 +438,9 @@ export default {
           slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
           price: "Rp 50.000",
           location: "Depok",
+          tahun: "2020",
+          kilometer: "45.000 KM",
+          merek: "Kawasaki",
           src: require("~/assets/images/staticImg/motor4.jpeg"),
         },
         {
@@ -475,6 +448,9 @@ export default {
           slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
           price: "Rp 50.000",
           location: "Depok",
+          tahun: "2020",
+          kilometer: "45.000 KM",
+          merek: "Kawasaki",
           src: require("~/assets/images/staticImg/motor2.jpeg"),
         },
         {
@@ -482,6 +458,9 @@ export default {
           slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
           price: "Rp 50.000",
           location: "Depok",
+          tahun: "2020",
+          kilometer: "45.000 KM",
+          merek: "Kawasaki",
           src: require("~/assets/images/staticImg/motor1.jpeg"),
         },
         {
@@ -489,6 +468,9 @@ export default {
           slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
           price: "Rp 50.000",
           location: "Depok",
+          tahun: "2020",
+          kilometer: "45.000 KM",
+          merek: "Kawasaki",
           src: require("~/assets/images/staticImg/motor4.jpeg"),
         },
         {
@@ -496,6 +478,9 @@ export default {
           slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
           price: "Rp 50.000",
           location: "Depok",
+          tahun: "2020",
+          kilometer: "45.000 KM",
+          merek: "Kawasaki",
           src: require("~/assets/images/staticImg/motor3.jpeg"),
         },
       ],
@@ -554,6 +539,34 @@ export default {
 </script>
 
 <style scoped>
+.shadow-box-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for modern look */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shadow-box-card:hover {
+  transform: translateY(-4px);
+  /* Lift effect on hover */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  /* Enhanced shadow on hover */
+}
+
+.product-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.primary--text {
+  color: #1976d2;
+  /* Vuetify primary color or customize as needed */
+}
+
+.form-radius {
+  border-radius: 20px;
+}
+
 .carousel {
   display: block;
   object-fit: cover;
@@ -565,6 +578,7 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .merk-button {
   border: solid 1px darkgray !important;
   width: 70px;
@@ -572,9 +586,11 @@ export default {
   border-radius: 10px;
   cursor: pointer;
 }
+
 .merk-button:hover {
   background-color: rgb(247, 247, 247);
 }
+
 .tipe-kendaraan {
   border: solid 1px darkgray !important;
   width: 170px;
@@ -589,9 +605,7 @@ export default {
 .tipe-kendaraan:hover {
   background-color: rgb(247, 247, 247);
 }
-.product-name {
-  height: 40px;
-}
+
 .shadow-box {
   box-shadow: 0 2px 20px 0 rgba(40, 51, 63, 0.12);
   -webkit-box-shadow: 0 2px 20px 0 rgba(40, 51, 63, 0.12);
@@ -599,17 +613,20 @@ export default {
   margin-bottom: 16px;
   position: relative;
 }
+
 .merekSearch {
-  margin-top: 360px;
+  margin-top: 500px;
 }
+
 .shadowSearch {
-  box-shadow: 0 2px 20px 0 rgba(40, 51, 63, 0.12);
+  box-shadow: 0 2px 20px 0 rgba(40, 51, 63, 0.30);
   -webkit-box-shadow: 0 2px 20px 0 rgba(40, 51, 63, 0.12);
   -moz-box-shadow: 0 2px 20px 0 rgba(40, 51, 63, 0.12);
   margin-bottom: 16px;
   position: relative;
   border-radius: 30px;
 }
+
 .service {
   height: 300px;
   background-color: rgb(226, 226, 226);

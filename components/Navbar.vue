@@ -18,7 +18,7 @@
       <div v-if="!$vuetify.breakpoint.smAndDown" class="d-flex">
         <div v-for="button of Navbutton" :key="button.name" class="mr-5">
           <a :href="button.href">
-            <p class="text-body-2 my-auto">{{ button.name }}</p>
+            <p class="text-body-1  my-auto">{{ button.name }}</p>
           </a>
         </div>
       </div>

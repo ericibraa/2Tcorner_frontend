@@ -19,8 +19,17 @@ export default {
     ]
   },
 
+  watchers: {
+    webpack: {
+      poll: true,
+      ignored: /node_modules/, 
+    },
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    "~/assets/global.scss",
+    "~/assets/css/theme.css",
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -52,11 +61,18 @@ export default {
           secondary: colors.amber.darken3,
           light: '#FFEBEE'
         }
-      }
+      },
+      treeShake: true,
     }
+    
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    hotMiddleware: {
+      client: {
+        overlay: false, // Optional: Menampilkan error overlay di browser
+      },
+    },
   }
 }
