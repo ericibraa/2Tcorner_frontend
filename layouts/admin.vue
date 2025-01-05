@@ -43,7 +43,7 @@
         </a>
       </v-toolbar-title>
       <v-spacer />
-      <v-btn icon>
+      <v-btn icon href="/admin/login">
         <v-avatar
           ><v-img :src="require('~/assets/images/logo/avatar.jpg')"></v-img
         ></v-avatar>

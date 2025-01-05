@@ -1,184 +1,58 @@
 <template>
   <v-container>
-    <v-card flat>
-      <v-card-title class="justify-center">
-        <p class="text-h4 font-weight-bold text-center mb-0">Benefit With Us</p>
-        <div
-          :class="$vuetify.breakpoint.smAndDown ? 'judulMobile' : 'judul'"
-        ></div>
-      </v-card-title>
-      <v-card-text class="pt-15">
-        <v-row>
-          <v-col cols="12" md="6">
-            <div v-if="!$vuetify.breakpoint.smAndDown">
-              <p class="text-body-2">
-                Kami memiliki jaringan keseluruh Indonesia, Malaysia, jepang dan
-                Thailand sehingga kami dapat memberikan informasi yang lengkap
-                yang dapat memenuhi motor Impian kalian tentunya.
-              </p>
-              <ol type="1">
-                <li>
-                  <p class="text-body-2 mb-2">
-                    Transaksi aman seluruh Indonesia dan luar negeri
-                  </p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">Pilihan tepat dan terpercaya</p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">Claim jika barang tidak sesuai</p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">Claim barang jika tidak sesuai</p>
-                </li>
-                <li><p class="text-body-2 mb-2">After sales</p></li>
-                <li>
-                  <p class="text-body-2 mb-2">Sparepart baru dan second</p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">Purna jual yang kompetitif</p>
-                </li>
-                <li><p class="text-body-2 mb-2">Jual cepat yang aman</p></li>
-                <li>
-                  <p class="text-body-2 mb-2">Check point unit kendaraan</p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">
-                    Pelayanan professional dan cepat
-                  </p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">
-                    Harga terbaik dan sesuai kondisi
-                  </p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">
-                    Service kendaraan dan restorasi
-                  </p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">
-                    Sudah terkoneksi dengan jasa pengiriman towing , cargo dan
-                    container
-                  </p>
-                </li>
-              </ol>
+    <v-row justify="center">
+      <v-col cols="12" md="8">
+        <!-- Main Section -->
+        <v-card class="pa-5 elevation-3">
+          <v-card-title class="justify-center">
+            <div class="d-flex">
+              <v-img :src="require('~/assets/images/logo/2tcorner 1.png')" max-width="200" class="mx-auto"></v-img>
+              <p class="text-h5 font-weight-bold text-center ml-5 my-auto">Benefit</p>
             </div>
-            <v-img
-              :src="require('~/assets/images/logo/2tcorner 1.png')"
-              max-width="200"
-              class="mx-auto"
-              v-else
-            ></v-img>
-            <!-- <p>
-              We have a network throughout Indonesia, Malaysia, Japan and
-              Thailand so we can provide complete information that can fulfill
-              your dream motorbike of course.
+          </v-card-title>
+          <v-card-title class="text-h6 font-weight-bold">
+            Kenapa Memilih Kami?
+          </v-card-title>
+          <v-card-text>
+            <p class="text-body-1">
+              Kami memiliki jaringan ke seluruh Indonesia, Malaysia, Jepang, dan
+              Thailand sehingga kami dapat memberikan informasi yang lengkap untuk
+              memenuhi motor impian kalian tentunya.
             </p>
-            <ol type="1">
-              <li>Secure transactions throughout Indonesia and abroad</li>
-              <li>The right and trusted choice</li>
-              <li>Claim if the goods do not match</li>
-              <li>Claim the goods if they are not suitable</li>
-              <li>After sales</li>
-              <li>New and second hand spare parts</li>
-              <li>Competitive after-sales</li>
-              <li>Safe fast selling</li>
-              <li>Vehicle unit check point</li>
-              <li>Professional and fast service</li>
-              <li>Best price and according to condition</li>
-              <li>Vehicle service and restoration</li>
-              <li>
-                Already connected to towing, cargo and container delivery
-                services
-              </li>
-            </ol> -->
-          </v-col>
-          <v-col cols="12" md="6">
-            <div v-if="$vuetify.breakpoint.smAndDown">
-              <p class="text-body-2">
-                Kami memiliki jaringan keseluruh Indonesia, Malaysia, jepang dan
-                Thailand sehingga kami dapat memberikan informasi yang lengkap
-                yang dapat memenuhi motor Impian kalian tentunya.
-              </p>
-              <ol type="1">
-                <li>
-                  <p class="text-body-2 mb-2">
-                    Transaksi aman seluruh Indonesia dan luar negeri
-                  </p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">Pilihan tepat dan terpercaya</p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">Claim jika barang tidak sesuai</p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">Claim barang jika tidak sesuai</p>
-                </li>
-                <li><p class="text-body-2 mb-2">After sales</p></li>
-                <li>
-                  <p class="text-body-2 mb-2">Sparepart baru dan second</p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">Purna jual yang kompetitif</p>
-                </li>
-                <li><p class="text-body-2 mb-2">Jual cepat yang aman</p></li>
-                <li>
-                  <p class="text-body-2 mb-2">Check point unit kendaraan</p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">
-                    Pelayanan professional dan cepat
-                  </p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">
-                    Harga terbaik dan sesuai kondisi
-                  </p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">
-                    Service kendaraan dan restorasi
-                  </p>
-                </li>
-                <li>
-                  <p class="text-body-2 mb-2">
-                    Sudah terkoneksi dengan jasa pengiriman towing , cargo dan
-                    container
-                  </p>
-                </li>
-              </ol>
-            </div>
-            <v-img
-              :src="require('~/assets/images/logo/2tcorner 1.png')"
-              max-width="200"
-              class="mx-auto"
-              v-else
-            ></v-img>
-          </v-col>
-        </v-row>
-      </v-card-text>
-    </v-card>
+            <p class="text-body-1">
+              <strong>Keunggulan Kami:</strong>
+            </p>
+            <ul>
+              <li><p class="text-body-1">Transaksi aman seluruh Indonesia dan luar negeri.</p></li>
+              <li><p class="text-body-1">Pilihan tepat dan terpercaya.</p></li>
+              <li><p class="text-body-1">Claim jika barang tidak sesuai.</p></li>
+              <li><p class="text-body-1">After sales yang memuaskan.</p></li>
+              <li><p class="text-body-1">Sparepart baru dan second.</p></li>
+              <li><p class="text-body-1">Purna jual yang kompetitif.</p></li>
+              <li><p class="text-body-1">Jual cepat yang aman.</p></li>
+              <li><p class="text-body-1">Check point unit kendaraan.</p></li>
+              <li><p class="text-body-1">Pelayanan profesional dan cepat.</p></li>
+              <li><p class="text-body-1">Harga terbaik dan sesuai kondisi.</p></li>
+              <li><p class="text-body-1">Service kendaraan dan restorasi.</p></li>
+              <li><p class="text-body-1">
+                Sudah terkoneksi dengan jasa pengiriman towing, cargo, dan container.
+              </p></li>
+            </ul>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
+
+<script>
+export default {
+  name: "WhyChooseUs",
+};
+</script>
+
 <style>
-.about-us {
-  position: relative;
-}
-.content {
-  position: absolute;
-  top: 160px;
-  right: 0;
-  max-width: 450px;
-}
-.judul {
-  border-bottom: solid 4px red;
-  margin: 0 530px;
-}
-.judulMobile {
-  border-bottom: solid 4px red;
-  margin: 0 130px;
+.text-center {
+  text-align: center;
 }
 </style>

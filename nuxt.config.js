@@ -47,7 +47,11 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
   ],
+
+  middleware: 'auth',
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -74,5 +78,45 @@ export default {
         overlay: false, // Optional: Menampilkan error overlay di browser
       },
     },
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token', // Adjust based on your API response
+          global: true,
+          // required: true,
+          // type: 'Bearer',
+        },
+        user: {
+          property: '', // Adjust based on your API response
+          // autoFetch: true,
+        },
+        endpoints: {
+          login: {
+            url: process.env.API + '/users/token',
+            method: 'post',
+          },
+          logout: false,
+          user: {
+            url: process.env.API + '/users/me',
+            method: 'get',
+            propertyName: false
+          }
+        },
+      },
+    },
+    redirect: {
+      login: '/login', // Redirect to this route if not authenticated
+      logout: '/', // Redirect to this route after logout
+      callback: '/login', // Optional: Route for login callbacks
+      home: '/admin/dashboard', // Redirect to this route after login
+    },
+  },
+  
+
+  publicRuntimeConfig: {
+    api: process.env.API || 'http://localhost:8000',
   }
 }

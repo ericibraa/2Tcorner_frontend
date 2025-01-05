@@ -6,14 +6,14 @@
           <!-- Left Section: Contact Information -->
           <v-col cols="12" md="6" class="text-center text-md-left">
             <p class="footer-title text-overline mb-10">2tcorner</p>
-            <p class="text-h6 font-weight-bold mb-2">Address:</p>
-            <p class="grey--text text--darken-1 text-h6 mb-3">
+            <p class="text-body-1 font-weight-bold mb-2">Address:</p>
+            <p class="grey--text text--darken-1 text-body-1 mb-3">
               Gg H Otong Bojong Baru, Bojong Gede, Bogor, West Java 16920, Indonesia
             </p>
-            <p class="text-h6 font-weight-bold mb-2">Whatsapp:</p>
-            <p class="grey--text text--darken-1 text-h6 mb-3">085772578341</p>
-            <p class="text-h6 font-weight-bold mb-2">Email:</p>
-            <p class="grey--text text--darken-1 text-h6 mb-3">corner2t@gmail.com</p>
+            <p class="text-body-1 font-weight-bold mb-2">Whatsapp:</p>
+            <p class="grey--text text--darken-1 text-body-1 mb-3">085772578341</p>
+            <p class="text-body-1 font-weight-bold mb-2">Email:</p>
+            <p class="grey--text text--darken-1 text-body-1 mb-3">corner2t@gmail.com</p>
 
             <!-- Social Media Icons -->
             <div class="d-flex justify-center mt-4 mb-5">

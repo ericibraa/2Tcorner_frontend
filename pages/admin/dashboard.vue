@@ -8,6 +8,7 @@
 <script>
 export default {
   layout: "admin",
+  auth: "auth",
   data() {
     return {};
   },

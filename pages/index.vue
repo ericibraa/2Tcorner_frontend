@@ -96,13 +96,13 @@
       <p class="text-h6">Motor Populer</p>
       <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
         <v-slide-item v-for="(product, i) of listMotor" :key="product.name + i">
-          <v-card width="320" height="440" rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product.slug">
+          <v-card width="320" height="420" rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product.slug">
             <v-img :src="product.src" max-height="250"></v-img>
             <v-card-text class="pa-4">
-              <p class="product-name text-h6 font-weight-medium mb-2">{{ product.name }}</p>
-              <p class="text-h5 font-weight-bold primary--text mb-3">{{ product.price }}</p>
+              <p class="product-name text-hbody-1 font-weight-medium mb-2">{{ product.name }}</p>
+              <p class="text-h6 font-weight-bold primary--text mb-3">{{ product.price }}</p>
               <div class="d-flex align-center grey--text text-body-2 mb-3">
-                <v-icon class="mr-1" size="18">mdi-map-marker</v-icon> {{ product.location }}
+                <v-icon class="mr-1 text-body-2" size="18">mdi-map-marker</v-icon> {{ product.location }}
               </div>
               <div class="d-flex flex-wrap">
                 <v-chip outlined class="mr-1 mb-2" small>
@@ -129,11 +129,11 @@
       <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
         <v-slide-item v-for="(sparepart, i) of listSparepart" :key="sparepart.name + i">
           <a>
-            <v-card width="320" height="440" rounded="xxl" class="shadow-box-card ma-4" :href="'/sparepart/' + sparepart.slug">
+            <v-card width="320" height="420" rounded="xxl" class="shadow-box-card ma-4" :href="'/sparepart/' + sparepart.slug">
               <v-img :src="sparepart.src" max-height="250"></v-img>
               <v-card-text class="pa-4">
-                <p class="product-name text-h6 font-weight-medium mb-2">{{ sparepart.name }}</p>
-                <p class="text-h5 font-weight-bold primary--text mb-3">{{ sparepart.price }}</p>
+                <p class="product-name text-body-1 font-weight-medium mb-2">{{ sparepart.name }}</p>
+                <p class="text-h6 font-weight-bold primary--text mb-3">{{ sparepart.price }}</p>
                 <div class="d-flex align-center grey--text text-body-2 mb-3">
                   <v-icon class="mr-1" size="18">mdi-map-marker</v-icon> {{ sparepart.location }}
                 </div>
