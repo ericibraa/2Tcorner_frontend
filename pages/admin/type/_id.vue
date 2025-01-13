@@ -10,6 +10,19 @@
                         <v-col cols="12">
                             <v-text-field label="Tipe Kendaraan" outlined hide-details v-model="type"></v-text-field>
                         </v-col>
+                        <v-col cols="10">
+                            <v-text-field label="Link Image Kendaraan" outlined hide-details
+                                v-model="typeImg"></v-text-field>
+                        </v-col>
+                        <v-col cols="2" class="my-auto">
+                            <v-btn @click="addImage()" color="red" dark block>Add Image</v-btn>
+                        </v-col>
+                        <v-col cols="12" v-if="imgTemp != []">
+                            <div class="d-flex">
+                                <v-img v-for="img in imgTemp" :key="img" :src="img" aspect-ratio="1" max-height="200"
+                                    max-width="200" class="mr-3"></v-img>
+                            </div>
+                        </v-col>
                     </v-row>
                 </v-card-text>
                 <v-card-text class="text-end">
@@ -26,7 +39,9 @@ export default {
     data() {
         return {
             type: "",
-            detailType: {}
+            typeImg: "",
+            detailType: {},
+            imgTemp: []
         };
     },
     methods: {
@@ -40,6 +55,10 @@ export default {
                 console.log(e);
             }
         },
+        addImage() {
+            this.imgTemp.push(this.typeImg)
+            this.typeImg = ""
+        }
     },
     async fetch() {
         try {

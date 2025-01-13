@@ -3,16 +3,8 @@
 
     <!-- Carousel Section -->
     <div :class="$vuetify.breakpoint.smAndDown ? '' : 'carousel pb-5'">
-      <v-carousel
-        cycle
-        hide-delimiter-background
-        continuous
-        hide-delimiters
-        show-arrows-on-hover
-        width="1200"
-        height="600"
-        class="slider"
-      >
+      <v-carousel cycle hide-delimiter-background continuous hide-delimiters show-arrows-on-hover width="1200"
+        height="auto" class="slider">
         <v-carousel-item>
           <v-img :src="require('~/assets/images/staticImg/MainBannerRev.png')"></v-img>
         </v-carousel-item>
@@ -22,32 +14,23 @@
     <!-- Merek Search Section -->
     <div :class="$vuetify.breakpoint.smAndDown ? '' : 'merekSearch'">
       <v-container>
-        <div class="shadowSearch">
-          <v-card flat rounded="xxl">
+        <div :class="$vuetify.breakpoint.smAndDown ? '' : 'shadowSearch'">
+          <v-card flat rounded="xxl" :elevation="$vuetify.breakpoint.smAndDown ? 0 : ''">
             <v-row>
               <!-- Left Section: Search by Brand -->
-              <v-col cols="12" md="8" class="py-5">
-                <v-card-text>
-                  <p class="text-h5 mx-5">Mau cari motor?</p>
-                  <v-text-field
-                    label="Cari motor berdasarkan brand, model, dll"
-                    class="form-radius mb-5 mx-5"
-                    outlined
-                    hide-details
-                  ></v-text-field>
-                  <v-img
-                    class="mx-5"
-                    :src="require('~/assets/images/staticImg/example.png')"
-                  ></v-img>
+              <v-col cols="12" md="8" :class="$vuetify.breakpoint.smAndDown ? '' : 'py-5'">
+                <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-0' : ''">
+                  <p :class="$vuetify.breakpoint.smAndDown ? 'text-h6' : 'text-h6 mx-5'">Mau cari motor?</p>
+                  <v-text-field label="Cari motor berdasarkan brand, model, dll"
+                    :class="$vuetify.breakpoint.smAndDown ? 'form-radius mb-3' : 'form-radius mb-5 mx-5'"
+                    :dense="!$vuetify.breakpoint.smAndDown" outlined hide-details></v-text-field>
+                  <v-img :class="$vuetify.breakpoint.smAndDown ? '' : 'mx-5'"
+                    :src="require('~/assets/images/staticImg/example.png')"></v-img>
                   <v-slide-group show-arrows="never">
                     <v-slide-item v-for="tipe of tipeKendaraan" :key="tipe.value">
                       <div class="mt-7">
-                        <v-img
-                          :src="tipe.src ? tipe.src : require('~/assets/images/staticImg/x-image.png')"
-                          max-height="60"
-                          width="125"
-                          contain
-                        ></v-img>
+                        <v-img :src="tipe.src ? tipe.src : require('~/assets/images/staticImg/x-image.png')"
+                          max-height="60" max-width="125" contain></v-img>
                         <p class="text-center text-body-2 my-2">{{ tipe.name }}</p>
                       </div>
                     </v-slide-item>
@@ -56,32 +39,18 @@
               </v-col>
 
               <!-- Divider -->
-              <v-divider vertical class="my-5"></v-divider>
+              <v-divider vertical class="my-5" v-if="!$vuetify.breakpoint.smAndDown"></v-divider>
 
               <!-- Right Section: Search by Category -->
-              <v-col cols="12" md="4" class="py-5 pr-10">
-                <v-card-text>
-                  <p class="text-h5">Cari motor berdasarkan kategori?</p>
-                  <v-select
-                    :items="listMesin"
-                    label="Mesin"
-                    item-text="name"
-                    item-value="value"
-                    outlined
-                    hide-details
-                    class="form-radius mb-5"
-                  ></v-select>
+              <v-col cols="12" md="4" :class="$vuetify.breakpoint.smAndDown ? '' : 'py-5 pr-10'">
+                <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-0' : ''">
+                  <p class="text-h6">Cari motor berdasarkan kategori?</p>
+                  <v-select :items="listMesin" label="Mesin" item-text="name" item-value="value" outlined hide-details
+                    class="form-radius mb-5"></v-select>
                   <v-text-field label="CC" outlined hide-details class="mb-5 form-radius"></v-text-field>
                   <v-text-field label="Tahun" outlined hide-details class="mb-5 form-radius"></v-text-field>
-                  <v-select
-                    :items="listGrade"
-                    label="Grade"
-                    item-text="name"
-                    item-value="value"
-                    outlined
-                    hide-details
-                    class="mb-5 form-radius"
-                  ></v-select>
+                  <v-select :items="listGrade" label="Grade" item-text="name" item-value="value" outlined hide-details
+                    class="mb-5 form-radius"></v-select>
                   <v-btn block color="#F1363D" dark rounded class="py-6">Cari kendaraan</v-btn>
                 </v-card-text>
               </v-col>
@@ -94,27 +63,34 @@
     <!-- Popular Motor Section -->
     <v-container class="py-5">
       <p class="text-h6">Motor Populer</p>
-      <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
-        <v-slide-item v-for="(product, i) of listMotor" :key="product.name + i">
-          <v-card width="320" height="420" rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product.slug">
-            <v-img :src="product.src" max-height="250"></v-img>
-            <v-card-text class="pa-4">
-              <p class="product-name text-hbody-1 font-weight-medium mb-2">{{ product.name }}</p>
-              <p class="text-h6 font-weight-bold primary--text mb-3">{{ product.price }}</p>
+      <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown">
+        <v-slide-item v-for="product in products" :key="product._id">
+          <v-card :width="$vuetify.breakpoint.smAndDown ? 175 : 320" :height="$vuetify.breakpoint.smAndDown ? 335 : 420"
+            rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product._id">
+            <v-img :src="product.image[0]" max-height="250" aspect-ratio="1"></v-img>
+            <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : 'pa-4'">
+              <p
+                :class="$vuetify.breakpoint.smAndDown ? 'product-name text-body-2 font-weight-medium mb-1' : 'product-name text-body-1 font-weight-medium mb-2'">
+                {{ product.name }}</p>
+              <p
+                :class="$vuetify.breakpoint.smAndDown ? 'text-body-1 font-weight-bold primary--text mb-2' : 'text-h6 font-weight-bold primary--text mb-3'">
+                {{ product.price.current | currency }}</p>
               <div class="d-flex align-center grey--text text-body-2 mb-3">
-                <v-icon class="mr-1 text-body-2" size="18">mdi-map-marker</v-icon> {{ product.location }}
+                <v-icon class="mr-1" :size="$vuetify.breakpoint.smAndDown ? 12 : 18">mdi-map-marker</v-icon>
+                <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{ product.location
+                  }}</p>
               </div>
               <div class="d-flex flex-wrap">
                 <v-chip outlined class="mr-1 mb-2" small>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.merek }}</p>
-                </v-chip>
-                <v-chip outlined class="mr-1 mb-2" small>
-                  <v-icon size="16" class="mr-1 grey--text">mdi-speedometer</v-icon>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.kilometer }}</p>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.merk_details.name }}</p>
                 </v-chip>
                 <v-chip outlined class="mr-1 mb-2" small>
                   <v-icon size="16" class="mr-1 grey--text">mdi-calendar-month</v-icon>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.tahun }}</p>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.year }}</p>
+                </v-chip>
+                <v-chip outlined class="mr-1 mb-2" small>
+                  <v-icon size="16" class="mr-1 grey--text">mdi-speedometer</v-icon>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.km_of_use }}</p>
                 </v-chip>
               </div>
             </v-card-text>
@@ -126,29 +102,38 @@
     <!-- Sparepart Section -->
     <v-container class="py-5">
       <p class="text-h6">Sparepart</p>
-      <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp">
-        <v-slide-item v-for="(sparepart, i) of listSparepart" :key="sparepart.name + i">
-          <a>
-            <v-card width="320" height="420" rounded="xxl" class="shadow-box-card ma-4" :href="'/sparepart/' + sparepart.slug">
-              <v-img :src="sparepart.src" max-height="250"></v-img>
-              <v-card-text class="pa-4">
-                <p class="product-name text-body-1 font-weight-medium mb-2">{{ sparepart.name }}</p>
-                <p class="text-h6 font-weight-bold primary--text mb-3">{{ sparepart.price }}</p>
-                <div class="d-flex align-center grey--text text-body-2 mb-3">
-                  <v-icon class="mr-1" size="18">mdi-map-marker</v-icon> {{ sparepart.location }}
-                </div>
-                <div class="d-flex flex-wrap">
-                  <v-chip outlined class="mr-1 mb-2" small>
-                    <p class="text-caption font-weight-medium my-auto">{{ sparepart.merek }}</p>
-                  </v-chip>
-                  <v-chip outlined class="mr-1 mb-2" small>
-                    <v-icon size="16" class="mr-1 grey--text">mdi-calendar-month</v-icon>
-                    <p class="text-caption font-weight-medium my-auto">{{ sparepart.tahun }}</p>
-                  </v-chip>
-                </div>
-              </v-card-text>
-            </v-card>
-          </a>
+      <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown">
+        <v-slide-item v-for="product in products" :key="product._id">
+          <v-card :width="$vuetify.breakpoint.smAndDown ? 175 : 320" :height="$vuetify.breakpoint.smAndDown ? 335 : 420"
+            rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product._id">
+            <v-img :src="product.image[0]" max-height="250" aspect-ratio="1"></v-img>
+            <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : 'pa-4'">
+              <p
+                :class="$vuetify.breakpoint.smAndDown ? 'product-name text-body-2 font-weight-medium mb-1' : 'product-name text-body-1 font-weight-medium mb-2'">
+                {{ product.name }}</p>
+              <p
+                :class="$vuetify.breakpoint.smAndDown ? 'text-body-1 font-weight-bold primary--text mb-2' : 'text-h6 font-weight-bold primary--text mb-3'">
+                {{ product.price.current | currency }}</p>
+              <div class="d-flex align-center grey--text text-body-2 mb-3">
+                <v-icon class="mr-1" :size="$vuetify.breakpoint.smAndDown ? 12 : 18">mdi-map-marker</v-icon>
+                <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{ product.location
+                  }}</p>
+              </div>
+              <div class="d-flex flex-wrap">
+                <v-chip outlined class="mr-1 mb-2" small>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.merk_details.name }}</p>
+                </v-chip>
+                <v-chip outlined class="mr-1 mb-2" small>
+                  <v-icon size="16" class="mr-1 grey--text">mdi-calendar-month</v-icon>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.year }}</p>
+                </v-chip>
+                <v-chip outlined class="mr-1 mb-2" small>
+                  <v-icon size="16" class="mr-1 grey--text">mdi-speedometer</v-icon>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.km_of_use }}</p>
+                </v-chip>
+              </div>
+            </v-card-text>
+          </v-card>
         </v-slide-item>
       </v-slide-group>
     </v-container>
@@ -157,7 +142,7 @@
     <div class="shadow-box my-5">
       <v-container class="py-5">
         <p class="text-h6">Berita Otomotif</p>
-        <div class="mb-4">
+        <!-- <div class="mb-4">
           <v-chip v-for="article in articles" :key="article.id"
             :color="selectedArticle.id === article.id ? 'primary' : ''" @click="setArticle(article)"
             :outlined="selectedArticle.id !== article.id" class="text-center mr-2 mb-2">
@@ -166,16 +151,22 @@
               {{ article.name }}
             </p>
           </v-chip>
-        </div>
-        <v-slide-group :show-arrows="$vuetify.breakpoint.mdAndUp" class="mb-4">
-          <v-slide-item v-for="(article, i) of listNewarticle" :key="article.title + i">
-            <v-card width="400" height="380" rounded="xxl" class="shadow-box-card ma-4 overflow-hidden"
-              :href="'/article/' + article.slug" elevation="2">
-              <v-img :src="article.src" max-height="200" class="rounded-t-xl"></v-img>
-              <v-card-text class="pa-4">
-                <p class="text-h6 font-weight-bold mt-2 mb-1" style="max-width: 100%; overflow: hidden;">
-                  {{ article.title }}
-                </p>
+        </div> -->
+        <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown" class="mb-4">
+          <v-slide-item v-for="(article, i) of articles" :key="article.title + i">
+            <v-card :width="$vuetify.breakpoint.smAndDown ? 300 : 350"
+              :height="$vuetify.breakpoint.smAndDown ? 340 : 360" rounded="xxl"
+              class="shadow-box-card ma-4 overflow-hidden" :href="'/articles/' + article._id" elevation="2">
+              <v-img :src="article.image[0]" max-height="200" aspect-ratio="1" class="rounded-t-xl"></v-img>
+              <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2 pt-0' : 'pa-4 pt-0'">
+                <div :style="$vuetify.breakpoint.smAndDown ? 'height: 80px' : 'height:100px;'">
+                  <p :class="$vuetify.breakpoint.smAndDown ? 'text-body-2 font-weight-bold mt-2 mb-1' : 'text-bodi-1 font-weight-bold mt-2 mb-1'"
+                    style="max-width: 100%; overflow: hidden;">
+                    {{ article.title }}
+                  </p>
+                  <p :class="$vuetify.breakpoint.smAndDown ? 'text-caption article-truncate' : 'text-body-2'">{{ article.short_desc
+                    }}</p>
+                </div>
                 <v-divider></v-divider>
                 <div class="d-flex justify-space-between mt-2">
                   <v-btn text class="text-caption grey--text">Read more</v-btn>
@@ -189,26 +180,39 @@
     </div>
 
     <!-- Service Section -->
-     <v-container>
-       <v-card flat class="my-10">
-         <v-card-title class="justify-center">
-           <p class="text-h4">Our Service</p>
-          </v-card-title>
-          <v-card-text>
-            <v-row>
-              <v-col cols="4">
-                <div class="service"></div>
-              </v-col>
-              <v-col cols="4">
-                <div class="service"></div>
-              </v-col>
-              <v-col cols="4">
-                <div class="service"></div>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-container>
+    <v-container>
+      <v-card flat class="my-10">
+        <v-card-title class="justify-center">
+          <p :class="$vuetify.breakpoint.smAndDown ? 'text-h5' : 'text-h4'">Our Service</p>
+        </v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col cols="6" md="3" lg="3" v-for="img in ourService" :key="img">
+              <v-img :src="img"></v-img>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-container>
+
+    <!-- Service Section -->
+    <!-- <v-container>
+      <v-card flat class="my-10 py-6 px-8">
+        <v-card-title class="justify-center">
+          <p class="text-h4">Kenapa harus pilih 2tcorner?</p>
+        </v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col md="3" lg="3" sm="6" xs="12" v-for="(benefit, index) in ourService" :key="index"
+              class="text-center py-4">
+              <v-card outlined class="pa-4 hover-card">
+                <v-img :src="benefit" contain max-height="100" class="mb-3"></v-img>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-container> -->
   </div>
 </template>
 
@@ -218,35 +222,15 @@ export default {
   name: "IndexPage",
   data() {
     return {
-      articles: [
-        {
-          id: "001",
-          name: "Trending",
-        },
-        {
-          id: "002",
-          name: "Terbaru",
-        },
-      ],
-      merkKendaraan: [
-        {
-          name: "Yamaha",
-          value: "yamaha",
-          src: require("~/assets/images/brandLogo/yamaha.jpg"),
-          href: "",
-        },
-        {
-          name: "Honda",
-          value: "honda",
-          src: require("~/assets/images/brandLogo/honda.png"),
-          href: "",
-        },
-        {
-          name: "Kawasaki",
-          value: "kawasaki",
-          src: require("~/assets/images/brandLogo/kawasaki.png"),
-          href: "",
-        },
+      ourService: [
+        require("~/assets/images/staticImg/our-service/towing.jpeg"),
+        require("~/assets/images/staticImg/our-service/inspection.jpeg"),
+        require("~/assets/images/staticImg/our-service/consigment.jpeg"),
+        require("~/assets/images/staticImg/our-service/biro jasa.jpeg"),
+        require("~/assets/images/staticImg/our-service/rekber.jpeg"),
+        require("~/assets/images/staticImg/our-service/meida online.jpeg"),
+        require("~/assets/images/staticImg/our-service/jual beli.jpeg"),
+        require("~/assets/images/staticImg/our-service/forwarder.jpeg"),
       ],
       tipeKendaraan: [
         {
@@ -336,190 +320,12 @@ export default {
           name: "D",
         },
       ],
-      listSparepart: [
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          price: "Rp 50.000",
-          location: "Depok",
-          merek: "Honda",
-          tahun: "2014",
-          src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          price: "Rp 50.000",
-          location: "Depok",
-          merek: "Honda",
-          tahun: "2014",
-          src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          price: "Rp 50.000",
-          location: "Depok",
-          merek: "Honda",
-          tahun: "2014",
-          src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          price: "Rp 50.000",
-          location: "Depok",
-          merek: "Honda",
-          tahun: "2014",
-          src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          price: "Rp 50.000",
-          location: "Depok",
-          merek: "Honda",
-          tahun: "2014",
-          src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          price: "Rp 50.000",
-          location: "Depok",
-          merek: "Honda",
-          tahun: "2014",
-          src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          price: "Rp 50.000",
-          location: "Depok",
-          merek: "Honda",
-          tahun: "2014",
-          src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          price: "Rp 50.000",
-          location: "Depok",
-          merek: "Honda",
-          tahun: "2014",
-          src: require("~/assets/images/staticImg/sparepart-body-vario.jpg"),
-        },
-      ],
-      listMotor: [
-        {
-          name: "For Sale Ninja 150 R Convert modif convert SS",
-          slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
-          price: "Rp 29.500.000",
-          location: "Tangerang",
-          tahun: "2020",
-          kilometer: "45.000 KM",
-          merek: "Kawasaki",
-          src: require("~/assets/images/staticImg/motor1.jpeg"),
-        },
-        {
-          name: "For Sale Ninja 150 RR Old Tahun 2011",
-          slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
-          price: "Rp 20.000.000",
-          location: "Jakarta",
-          tahun: "2020",
-          kilometer: "45.000 KM",
-          merek: "Kawasaki",
-          src: require("~/assets/images/staticImg/motor2.jpeg"),
-        },
-        {
-          name: "For Sale Ninja 150 SS Hijau",
-          slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
-          price: "Rp 50.000.000",
-          location: "Bandung",
-          tahun: "2020",
-          kilometer: "45.000 KM",
-          merek: "Kawasaki",
-          src: require("~/assets/images/staticImg/motor3.jpeg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
-          price: "Rp 50.000",
-          location: "Depok",
-          tahun: "2020",
-          kilometer: "45.000 KM",
-          merek: "Kawasaki",
-          src: require("~/assets/images/staticImg/motor4.jpeg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
-          price: "Rp 50.000",
-          location: "Depok",
-          tahun: "2020",
-          kilometer: "45.000 KM",
-          merek: "Kawasaki",
-          src: require("~/assets/images/staticImg/motor2.jpeg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
-          price: "Rp 50.000",
-          location: "Depok",
-          tahun: "2020",
-          kilometer: "45.000 KM",
-          merek: "Kawasaki",
-          src: require("~/assets/images/staticImg/motor1.jpeg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
-          price: "Rp 50.000",
-          location: "Depok",
-          tahun: "2020",
-          kilometer: "45.000 KM",
-          merek: "Kawasaki",
-          src: require("~/assets/images/staticImg/motor4.jpeg"),
-        },
-        {
-          name: "Sparepart body Vario 125 CC 2019",
-          slug: "for-sale-ninja-150-r-convert-modif-convert-ss",
-          price: "Rp 50.000",
-          location: "Depok",
-          tahun: "2020",
-          kilometer: "45.000 KM",
-          merek: "Kawasaki",
-          src: require("~/assets/images/staticImg/motor3.jpeg"),
-        },
-      ],
-      listNewarticle: [
-        {
-          title:
-            "Capai Target SDGs dengan Elektrifikasi Kendaraan Listrik Melalui Subsisdi dan Era Konversi di Indonesia",
-          body: "Indonesia, sebagai negara berkembang dengan populasi yang besar, memiliki tantangan besar dalam memenuhi kebutuhan energi yang terus meningkat.",
-          src: require("~/assets/images/staticImg/article.jpg"),
-        },
-        {
-          title:
-            "Capai Target SDGs dengan Elektrifikasi Kendaraan Listrik Melalui Subsisdi dan Era Konversi di Indonesia",
-          body: "Indonesia, sebagai negara berkembang dengan populasi yang besar, memiliki tantangan besar dalam memenuhi kebutuhan energi yang terus meningkat.",
-          src: require("~/assets/images/staticImg/article.jpg"),
-        },
-        {
-          title:
-            "Capai Target SDGs dengan Elektrifikasi Kendaraan Listrik Melalui Subsisdi dan Era Konversi di Indonesia",
-          body: "Indonesia, sebagai negara berkembang dengan populasi yang besar, memiliki tantangan besar dalam memenuhi kebutuhan energi yang terus meningkat.",
-          src: require("~/assets/images/staticImg/article.jpg"),
-        },
-        {
-          title:
-            "Capai Target SDGs dengan Elektrifikasi Kendaraan Listrik Melalui Subsisdi dan Era Konversi di Indonesia",
-          body: "Indonesia, sebagai negara berkembang dengan populasi yang besar, memiliki tantangan besar dalam memenuhi kebutuhan energi yang terus meningkat.",
-          src: require("~/assets/images/staticImg/article.jpg"),
-        },
-        {
-          title:
-            "Capai Target SDGs dengan Elektrifikasi Kendaraan Listrik Melalui Subsisdi dan Era Konversi di Indonesia",
-          body: "Indonesia, sebagai negara berkembang dengan populasi yang besar, memiliki tantangan besar dalam memenuhi kebutuhan energi yang terus meningkat.",
-          src: require("~/assets/images/staticImg/article.jpg"),
-        },
-      ],
       selectedArticle: {
         id: "001",
         name: "Trending",
       },
+      articles: [],
+      products: []
     };
   },
   methods: {
@@ -534,7 +340,19 @@ export default {
         this.selectedArticle = {};
       }
     },
+    async getArticles() {
+      var articles = await this.$axios.$get(this.$config.api + "/articles");
+      this.articles = articles.data
+    },
+    async getProducts() {
+      var product = await this.$axios.$get(this.$config.api + "/products");
+      this.products = product.data
+    }
   },
+  async fetch() {
+    await this.getArticles();
+    await this.getProducts();
+  }
 };
 </script>
 
@@ -553,6 +371,12 @@ export default {
 }
 
 .product-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.article-truncate {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

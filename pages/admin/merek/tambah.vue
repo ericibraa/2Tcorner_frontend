@@ -7,28 +7,20 @@
         </v-card-title>
         <v-card-text class="pa-5">
           <v-row>
-            <v-col cols="6">
-              <v-text-field
-                label="Merk Kendaraan"
-                outlined
-                hide-details
-                v-model="merk"
-              ></v-text-field>
+            <v-col cols="12">
+              <v-text-field label="Merk Kendaraan" outlined hide-details v-model="merk"></v-text-field>
             </v-col>
-            <v-col cols="6">
-              <v-text-field
-                label="Link Image Kendaraan"
-                outlined
-                hide-details
-                v-model="url_merk"
-              ></v-text-field>
-              <!-- <v-file-input
-                label="Unggah Merek Kendaraan"
-                outlined
-                prepend-icon="mdi-camera"
-                hide-details="auto"
-                v-model="img_merek"
-              ></v-file-input> -->
+            <v-col cols="10">
+              <v-text-field label="Link Image Kendaraan" outlined hide-details v-model="imgMerk"></v-text-field>
+            </v-col>
+            <v-col cols="2" class="my-auto">
+              <v-btn @click="addImage()" color="red" dark block>Add Image</v-btn>
+            </v-col>
+            <v-col cols="12" v-if="imgTemp != []">
+              <div class="d-flex">
+                <v-img v-for="img in imgTemp" :key="img" :src="img" aspect-ratio="1" max-height="200" max-width="200"
+                  class="mr-3"></v-img>
+              </div>
             </v-col>
           </v-row>
         </v-card-text>
@@ -46,7 +38,8 @@ export default {
   data() {
     return {
       merk: "",
-      url_merk: "",
+      imgMerk: "",
+      imgTemp: []
     };
   },
   methods: {
@@ -54,13 +47,17 @@ export default {
       try {
         await this.$axios.$post(this.$config.api + "/merk/", {
           name: this.merk,
-          url: this.url_merk,
+          url: this.imgMerk,
         });
         this.$router.push({ path: "/admin/merek" });
       } catch (e) {
         console.log(e);
       }
     },
+    addImage() {
+      this.imgTemp.push(this.imgMerk)
+      this.imgMerk = ''
+    }
   },
 };
 </script>

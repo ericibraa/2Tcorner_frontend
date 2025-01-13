@@ -81,6 +81,7 @@ export default {
         ["Merek", "/admin/merek"],
         ["tipe", "/admin/type"],
         ["lokasi", "/admin/location"],
+        ["article", "/admin/articles"]
       ],
       miniVariant: false,
     };

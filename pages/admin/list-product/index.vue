@@ -74,7 +74,7 @@ export default {
         { text: "Harga", value: "price.current" },
         { text: "Merek", value: "merk_details.name" },
         { text: "Kategori Mesin", value: "category" },
-        { text: "Tipe Motor", value: "type" },
+        { text: "Tipe Motor", value: "type_details.name" },
         { text: "CC", value: "cc" },
         { text: "Tahun Motor", value: "year" },
         { text: "Jumlah KM", value: "km_of_use" },

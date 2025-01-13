@@ -16,9 +16,9 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="!$vuetify.breakpoint.smAndDown" class="d-flex">
-        <div v-for="button of Navbutton" :key="button.name" class="mr-5">
+        <div v-for="button of Navbutton" :key="button.title" class="mr-5">
           <a :href="button.href">
-            <p class="text-body-1  my-auto">{{ button.name }}</p>
+            <p class="text-body-1  my-auto">{{ button.title }}</p>
           </a>
         </div>
       </div>
@@ -34,11 +34,11 @@
             >
           </v-list-item>
           <v-divider></v-divider>
-          <v-list-item v-for="button of Navbutton" :key="button.name">
+          <v-list-item v-for="button of Navbutton" :key="button.title">
             <v-list-item-title>
               <a :href="button.href">
                 <p class="text-body-2 my-auto">
-                  {{ button.name }}
+                  {{ button.title }}
                 </p>
               </a>
             </v-list-item-title>
@@ -55,23 +55,23 @@ export default {
       drawer: false,
       Navbutton: [
         {
-          name: "About Us",
+          title: "About Us",
           href: "/about_us",
         },
         // {
-        //   name: "Contact Us",
+        //   title: "Contact Us",
         //   href: "/contact_us",
         // },
         {
-          name: "Terms and Conditions",
+          title: "Terms and Conditions",
           href: "/tnc",
         },
         {
-          name: "How To Buy",
+          title: "How To Buy",
           href: "/how_to_buy",
         },
         {
-          name: "Benefits",
+          title: "Benefits",
           href: "/benefits",
         },
       ],
