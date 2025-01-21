@@ -23,16 +23,16 @@
                   <p :class="$vuetify.breakpoint.smAndDown ? 'text-h6' : 'text-h6 mx-5'">Mau cari motor?</p>
                   <v-text-field label="Cari motor berdasarkan brand, model, dll"
                     :class="$vuetify.breakpoint.smAndDown ? 'form-radius mb-3' : 'form-radius mb-5 mx-5'"
-                    :dense="!$vuetify.breakpoint.smAndDown" outlined hide-details></v-text-field>
+                    :dense="!$vuetify.breakpoint.smAndDown" outlined hide-details v-model="search"
+                    v-on:keyup.enter="search_products"></v-text-field>
                   <v-img :class="$vuetify.breakpoint.smAndDown ? '' : 'mx-5'"
                     :src="require('~/assets/images/staticImg/example.png')"></v-img>
                   <v-slide-group show-arrows="never">
-                    <v-slide-item v-for="tipe of tipeKendaraan" :key="tipe.value">
-                      <div class="mt-7">
-                        <v-img :src="tipe.src ? tipe.src : require('~/assets/images/staticImg/x-image.png')"
-                          max-height="60" max-width="125" contain></v-img>
-                        <p class="text-center text-body-2 my-2">{{ tipe.name }}</p>
-                      </div>
+                    <v-slide-item v-for="tipe of typeVehicle" :key="tipe._id">
+                        <div class="shadow-box-type mt-7" @click="search_by_type(tipe._id)">
+                          <v-img :src="tipe.image" max-height="70" max-width="125" contain></v-img>
+                          <p class="text-center text-body-2 my-2">{{ tipe.name }}</p>
+                        </div>
                     </v-slide-item>
                   </v-slide-group>
                 </v-card-text>
@@ -46,12 +46,14 @@
                 <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-0' : ''">
                   <p class="text-h6">Cari motor berdasarkan kategori?</p>
                   <v-select :items="listMesin" label="Mesin" item-text="name" item-value="value" outlined hide-details
-                    class="form-radius mb-5"></v-select>
-                  <v-text-field label="CC" outlined hide-details class="mb-5 form-radius"></v-text-field>
-                  <v-text-field label="Tahun" outlined hide-details class="mb-5 form-radius"></v-text-field>
+                    class="form-radius mb-5" v-model="machine"></v-select>
+                  <v-text-field label="CC" outlined hide-details class="mb-5 form-radius" v-model=cc></v-text-field>
+                  <v-text-field label="Tahun" outlined hide-details class="mb-5 form-radius"
+                    v-model="years"></v-text-field>
                   <v-select :items="listGrade" label="Grade" item-text="name" item-value="value" outlined hide-details
-                    class="mb-5 form-radius"></v-select>
-                  <v-btn block color="#F1363D" dark rounded class="py-6">Cari kendaraan</v-btn>
+                    class="mb-5 form-radius" v-model="grade"></v-select>
+                  <v-btn block color="#F1363D" dark rounded class="py-6" @click="search_by_category">Cari
+                    kendaraan</v-btn>
                 </v-card-text>
               </v-col>
             </v-row>
@@ -64,9 +66,9 @@
     <v-container class="py-5">
       <p class="text-h6">Motor Populer</p>
       <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown">
-        <v-slide-item v-for="product in products" :key="product._id">
+        <v-slide-item v-for="product in products" :key="product._id" v-show="product.variant == 'vehicle'">
           <v-card :width="$vuetify.breakpoint.smAndDown ? 175 : 320" :height="$vuetify.breakpoint.smAndDown ? 335 : 420"
-            rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product._id">
+            rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product.slug">
             <v-img :src="product.image[0]" max-height="250" aspect-ratio="1"></v-img>
             <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : 'pa-4'">
               <p
@@ -100,10 +102,10 @@
     </v-container>
 
     <!-- Sparepart Section -->
-    <v-container class="py-5">
+    <v-container class="py-5" v-if="products.some(product => product.variant === 'sparepart')">
       <p class="text-h6">Sparepart</p>
       <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown">
-        <v-slide-item v-for="product in products" :key="product._id">
+        <v-slide-item v-for="product in products" :key="product._id" v-show="product.variant == 'sparepart'">
           <v-card :width="$vuetify.breakpoint.smAndDown ? 175 : 320" :height="$vuetify.breakpoint.smAndDown ? 335 : 420"
             rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product._id">
             <v-img :src="product.image[0]" max-height="250" aspect-ratio="1"></v-img>
@@ -156,7 +158,7 @@
           <v-slide-item v-for="(article, i) of articles" :key="article.title + i">
             <v-card :width="$vuetify.breakpoint.smAndDown ? 300 : 350"
               :height="$vuetify.breakpoint.smAndDown ? 340 : 360" rounded="xxl"
-              class="shadow-box-card ma-4 overflow-hidden" :href="'/articles/' + article._id" elevation="2">
+              class="shadow-box-card ma-4 overflow-hidden" :href="'/articles/' + article.slug" elevation="2">
               <v-img :src="article.image[0]" max-height="200" aspect-ratio="1" class="rounded-t-xl"></v-img>
               <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2 pt-0' : 'pa-4 pt-0'">
                 <div :style="$vuetify.breakpoint.smAndDown ? 'height: 80px' : 'height:100px;'">
@@ -164,8 +166,9 @@
                     style="max-width: 100%; overflow: hidden;">
                     {{ article.title }}
                   </p>
-                  <p :class="$vuetify.breakpoint.smAndDown ? 'text-caption article-truncate' : 'text-body-2'">{{ article.short_desc
-                    }}</p>
+                  <p :class="$vuetify.breakpoint.smAndDown ? 'text-caption article-truncate' : 'text-body-2'">{{
+                    article.short_desc
+                  }}</p>
                 </div>
                 <v-divider></v-divider>
                 <div class="d-flex justify-space-between mt-2">
@@ -218,6 +221,8 @@
 
 
 <script>
+import { TriggerOpTypes } from 'vue';
+
 export default {
   name: "IndexPage",
   data() {
@@ -232,62 +237,13 @@ export default {
         require("~/assets/images/staticImg/our-service/jual beli.jpeg"),
         require("~/assets/images/staticImg/our-service/forwarder.jpeg"),
       ],
-      tipeKendaraan: [
-        {
-          value: "sport",
-          name: "Sport",
-          src: require("~/assets/images/logo/icon-touring.png"),
-          href: "sport/sport",
-        },
-        {
-          value: "matic",
-          name: "Matic",
-          src: require("~/assets/images/logo/icon-motor.png"),
-          href: "sport",
-        },
-        {
-          value: "bebek",
-          name: "Bebek",
-          src: require("~/assets/images/logo/icon-scooter.png"),
-          href: "sport",
-        },
-        {
-          value: "touring",
-          name: "Touring",
-          src: require("~/assets/images/logo/icon-touring.png"),
-          href: "sport",
-        },
-        {
-          value: "moge",
-          name: "Moge",
-          src: require("~/assets/images/logo/icon-touring.png"),
-          href: "sport",
-        },
-        {
-          value: "scooter",
-          name: "Scooter",
-          src: require("~/assets/images/logo/icon-scooter.png"),
-          href: "sport",
-        },
-        {
-          value: "moped",
-          name: "Moped",
-          src: require("~/assets/images/logo/icon-motor.png"),
-          href: "sport",
-        },
-        {
-          value: "trail",
-          name: "Trail",
-          src: require("~/assets/images/logo/icon-touring.png"),
-          href: "sport",
-        },
-        {
-          value: "listrik",
-          name: "Listrik",
-          src: require("~/assets/images/logo/icon-scooter.png"),
-          href: "sport",
-        },
-      ],
+      typeVehicle: [],
+      search: "",
+      machine: "",
+      cc: "",
+      years: "",
+      grade: "",
+      type: "",
       listMesin: [
         {
           value: "2t",
@@ -347,11 +303,29 @@ export default {
     async getProducts() {
       var product = await this.$axios.$get(this.$config.api + "/products");
       this.products = product.data
+    },
+    async getTypevehicle() {
+      var type = await this.$axios.$get(this.$config.api + "/type");
+      this.typeVehicle = type.data
+    },
+    search_products() {
+      this.$router
+        .replace({ path: "/katalog", query: { search: this.search } })
+        .then(() => this.$nuxt.refresh());
+    },
+    search_by_category() {
+      this.$router.replace({ path: "/katalog", query: { machine: this.machine, cc: this.cc, years: this.years, grade: this.grade } }).then(() => this.$nuxt.refresh())
+    },
+    search_by_type(type) {
+      this.$router
+        .replace({ path: "/katalog", query: { type: type } })
+        .then(() => this.$nuxt.refresh());
     }
   },
   async fetch() {
     await this.getArticles();
     await this.getProducts();
+    await this.getTypevehicle();
   }
 };
 </script>
@@ -369,6 +343,14 @@ export default {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   /* Enhanced shadow on hover */
 }
+
+.shadow-box-type {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.shadow-box-type:hover {
+  transform: translateY(-4px);
+}
+
 
 .product-name {
   white-space: nowrap;

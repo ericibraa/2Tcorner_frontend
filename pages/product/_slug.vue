@@ -95,7 +95,7 @@ export default {
   },
   async fetch() {
     try {
-      let details = await this.$axios.$get(this.$config.api + "/products/" + this.$route.params.id)
+      let details = await this.$axios.$get(this.$config.api + "/products/" + this.$route.params.slug)
       this.detailProduct = details
 
       this.items = [

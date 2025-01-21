@@ -42,12 +42,16 @@
               <v-text-field label="Jumlah KM Kendaraan" outlined hide-details
                 v-model="form.vehicle_kilometers"></v-text-field>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="4">
               <v-select :items="grade" label="Grade Kendaraan" outlined item-text="name" hide-details
                 v-model="form.vehicle_grade"></v-select>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="4">
               <v-text-field label="Lokasi Kendaraan" outlined hide-details v-model="form.location"></v-text-field>
+            </v-col>
+            <v-col cols="4">
+              <v-select :items="variant" label="Variant" outlined item-text="name" item-value="value"
+                hide-details v-model="form.variant"></v-select>
             </v-col>
             <v-col cols="10">
               <v-text-field label="Link Image Kendaraan" outlined hide-details v-model="form.image"></v-text-field>
@@ -98,6 +102,7 @@ export default {
         location: '',
         image: '',
         description: '',
+        variant: ''
       },
       imgTemp: [],
       mechine: [
@@ -132,6 +137,20 @@ export default {
           value: "d",
         },
       ],
+      variant: [
+        {
+          name: "Vehicle",
+          value: "vehicle"
+        },
+        {
+          name: "Sparepart",
+          value: "sparepart"
+        },
+        {
+          name: "Merchandise",
+          value: "merchandise"
+        },
+      ]
     };
   },
   methods: {
@@ -170,7 +189,8 @@ export default {
           year: this.form.vehicle_years,
           grade: this.form.vehicle_grade,
           km_of_use: this.form.vehicle_kilometers,
-          description: this.form.description
+          description: this.form.description,
+          variant: this.form.variant
         })
         this.$router.push({ path: "/admin/list-product" });
       } catch (e) {

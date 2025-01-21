@@ -60,7 +60,7 @@
                   <v-icon class="mr-1" :size="$vuetify.breakpoint.smAndDown ? 12 : 18">mdi-map-marker</v-icon>
                   <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{
                     product.location
-                  }}</p>
+                    }}</p>
                 </div>
                 <div class="d-flex flex-wrap">
                   <v-chip outlined class="mr-1 mb-2" small>
@@ -87,13 +87,33 @@
 export default {
   data() {
     return {
-      products: []
+      products: [],
+      search: "",
+      machine: "",
+      cc: "",
+      years: "",
+      grade: "",
+      type: ""
     }
   },
   methods: {
     async getProducts() {
+      console.log("=========================");
+      
       try {
-        let product = await this.$axios.$get(this.$config.api + "/products")
+        let product = await this.$axios.$get(this.$config.api + "/products",
+          {
+            params: {
+              limit: 24,
+              search: this.search,
+              machine: this.machine,
+              cc: this.cc,
+              years: this.years,
+              grade: this.grade,
+              type: this.type
+            }
+          }
+        )
         this.products = product.data
       } catch (e) {
         console.log(e);
@@ -102,6 +122,25 @@ export default {
     }
   },
   async fetch() {
+    if (this.$route.query.search) {
+      this.search = this.$route.query.search;
+    }
+    if (this.$route.query.machine) {
+      this.machine = this.$route.query.machine
+    }
+    if (this.$route.query.cc) {
+      this.cc = this.$route.query.cc
+    }
+    if (this.$route.query.years) {
+      this.years = this.$route.query.years
+    }
+    if (this.$route.query.grade) {
+      this.grade = this.$route.query.grade
+    }
+    if (this.$route.query.type) {
+      this.type = this.$route.query.type
+    }
+
     await this.getProducts()
   }
 };
