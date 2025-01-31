@@ -8,10 +8,11 @@
         </v-card-text>
         <v-card-text>
           <v-form @submit="login">
-            <v-text-field label="Email" type="email" outlined dense append-icon="mdi-account" v-model="form.email"></v-text-field>
+            <v-text-field label="Email" type="email" outlined dense append-icon="mdi-account"
+              v-model="form.email"></v-text-field>
             <v-text-field label="Password" :type="typeInputPassword" outlined dense
-              :append-icon="password ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
-              @click:append="togglePassword" v-model="form.password"></v-text-field>
+              :append-icon="password ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" @click:append="togglePassword"
+              v-model="form.password"></v-text-field>
             <v-btn block color="primary" type="submit">Login</v-btn>
           </v-form>
           <v-alert dismissible outlined text dense type="error" v-if="error">{{ error }}</v-alert>
@@ -44,8 +45,7 @@ export default {
       }
     },
     async login(e) {
-      console.log("tetsttt");
-      e.preventDefault();
+       e.preventDefault();
       try {
         let resp = await this.$auth.loginWith("local", {
           data: {
@@ -53,14 +53,17 @@ export default {
             password: this.form.password,
           },
         });
+        console.log("redirect");
+        await this.$auth.fetchUser()
+        // this.$router.push(this.$auth.options.redirect.home || "/admin/dashboard");
+
       } catch (err) {
-        console.log(err);
-        if (err.response.status == 401) {
+        console.log("Login Error:", err);
+        if (err.response && err.response.status == 401) {
           this.error = err.response.data.message;
         }
-
       }
-    },
+    }
   },
 };
 </script>

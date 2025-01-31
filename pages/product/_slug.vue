@@ -24,8 +24,9 @@
         </div>
         <div class="mt-10">
           <p class="text-body-1 mb-2">Detail Produk</p>
-          <p class="text-body-2">{{ detailProduct.description }}
-          </p>
+          <p class="text-body-2">{{ detailProduct.description }}</p>
+          <iframe width="300" height="500" :src="detailProduct.instagram" frameborder="0" v-if="detailProduct.instagram"></iframe>
+          <iframe width="300" height="500" :src="detailProduct.youtube" frameborder="0" v-if="detailProduct.youtube"></iframe>
         </div>
       </v-col>
       <v-col md="4">
@@ -100,7 +101,7 @@ export default {
 
       this.items = [
 
-      {
+        {
           text: "Home",
           disabled: false,
           href: "/",
@@ -114,7 +115,7 @@ export default {
           text: details.name,
           disabled: true,
         },
-      
+
       ]
     } catch (e) {
       console.log(e);

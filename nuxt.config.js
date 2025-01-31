@@ -60,8 +60,6 @@ export default {
     "vue2-editor/nuxt"
   ],
 
-  middleware: 'auth',
-
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
@@ -92,38 +90,37 @@ export default {
   auth: {
     strategies: {
       local: {
+       
         token: {
-          property: 'token', // Adjust based on your API response
+          property: 'access_token',
+          tokenType: 'bearer',
           global: true,
-          // required: true,
-          // type: 'Bearer',
         },
         user: {
-          property: '', // Adjust based on your API response
-          // autoFetch: true,
+          property: '',
+          autoFetch: true
         },
         endpoints: {
-          login: {
-            url: process.env.API + '/users/token',
+          login: { 
+            url: process.env.API + '/users/token', 
             method: 'post',
           },
           logout: false,
-          user: {
-            url: process.env.API + '/users/me',
-            method: 'get',
+          user: { 
+            url: process.env.API + '/users/me', 
+            method: 'get', 
             propertyName: false
-          }
+          },
         },
       },
     },
     redirect: {
-      login: '/login', // Redirect to this route if not authenticated
-      logout: '/', // Redirect to this route after logout
-      callback: '/login', // Optional: Route for login callbacks
-      home: '/admin/dashboard', // Redirect to this route after login
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home:'/admin/dashboard'
     },
   },
-  
 
   publicRuntimeConfig: {
     api: process.env.API || 'http://localhost:8000',

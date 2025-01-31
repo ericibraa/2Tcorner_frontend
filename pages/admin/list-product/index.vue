@@ -58,6 +58,7 @@
 <script>
 export default {
   layout: "admin",
+  middleware: "auth",
   data() {
     return {
       search: "",
@@ -79,7 +80,7 @@ export default {
         { text: "Tahun Motor", value: "year" },
         { text: "Jumlah KM", value: "km_of_use" },
         { text: "Grade", value: "grade" },
-        { text: "Lokasi", value: "location" },
+        { text: "Lokasi", value: "location_details.kota" },
         { text: "Action", value: "action" }
       ],
       products: [],

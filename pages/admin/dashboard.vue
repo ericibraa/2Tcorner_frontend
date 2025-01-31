@@ -8,7 +8,7 @@
 <script>
 export default {
   layout: "admin",
-  auth: "auth",
+  middleware: "auth",
   data() {
     return {};
   },

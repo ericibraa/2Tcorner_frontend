@@ -7,10 +7,7 @@
         </v-card-title>
         <v-card-text class="pa-5">
           <v-row>
-            <v-col cols="6">
-              <v-text-field label="Kode SKU" outlined hide-details v-model="form.sku_code"></v-text-field>
-            </v-col>
-            <v-col cols="6">
+            <v-col cols="12">
               <v-text-field label="Nama Kendaraan" outlined hide-details v-model="form.vehicle_name"></v-text-field>
             </v-col>
             <v-col cols="6">
@@ -47,11 +44,20 @@
                 v-model="form.vehicle_grade"></v-select>
             </v-col>
             <v-col cols="4">
-              <v-text-field label="Lokasi Kendaraan" outlined hide-details v-model="form.location"></v-text-field>
+              <v-select :items="locations" label="Lokasi" outlined item-text="kota" item-value="_id" hide-details
+                v-model="form.location"></v-select>
             </v-col>
             <v-col cols="4">
               <v-select :items="variant" label="Variant" outlined item-text="name" item-value="value"
                 hide-details v-model="form.variant"></v-select>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field label="Link Instagram (Optional)" outlined hide-details
+                v-model="form.instagram"></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field label="Link Youtube (Optional)" outlined hide-details
+                v-model="form.youtube"></v-text-field>
             </v-col>
             <v-col cols="10">
               <v-text-field label="Link Image Kendaraan" outlined hide-details v-model="form.image"></v-text-field>
@@ -81,10 +87,12 @@
 <script>
 export default {
   layout: "admin",
+  middleware: "auth",
   data() {
     return {
       merks: [],
       types: [],
+      locations: [],
       form: {
         vehicle_name: '',
         sku_code: '',
@@ -102,7 +110,9 @@ export default {
         location: '',
         image: '',
         description: '',
-        variant: ''
+        variant: '',
+        instagram: '',
+        youtube: ''
       },
       imgTemp: [],
       mechine: [
@@ -171,6 +181,15 @@ export default {
         console.log(e);
       }
     },
+    async getLocation() {
+      try {
+        var location = await this.$axios.$get(this.$config.api + "/location")
+        this.locations = location.data
+      } catch(e) {
+        console.log(e);
+        
+      }
+    },
     async submitProduct() {
       try {
         await this.$axios.$post(this.$config.api + "/products", {
@@ -190,7 +209,9 @@ export default {
           grade: this.form.vehicle_grade,
           km_of_use: this.form.vehicle_kilometers,
           description: this.form.description,
-          variant: this.form.variant
+          variant: this.form.variant,
+          instagram: this.form.instagram,
+          youtube: this.form.youtube
         })
         this.$router.push({ path: "/admin/list-product" });
       } catch (e) {
@@ -206,6 +227,7 @@ export default {
   async fetch() {
     await this.getMerks()
     await this.getTypes()
+    await this.getLocation()
   }
 };
 </script>
