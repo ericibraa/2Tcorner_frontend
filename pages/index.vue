@@ -62,13 +62,13 @@
     </div>
 
     <!-- Popular Motor Section -->
-    <v-container class="py-5">
+    <v-container class="py-5" v-if="products.some(product => product.variant === 'vehicle')">
       <p class="text-h6">Motor Populer</p>
       <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown">
         <v-slide-item v-for="product in products" :key="product._id" v-show="product.variant == 'vehicle'">
           <v-card :width="$vuetify.breakpoint.smAndDown ? 175 : 320" :height="$vuetify.breakpoint.smAndDown ? 335 : 420"
             rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product.slug">
-            <v-img :src="product.image[0]" max-height="250" aspect-ratio="1"></v-img>
+            <v-img :src="product.images_details[0].image" max-height="250" aspect-ratio="1"></v-img>
             <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : 'pa-4'">
               <p
                 :class="$vuetify.breakpoint.smAndDown ? 'product-name text-body-2 font-weight-medium mb-1' : 'product-name text-body-1 font-weight-medium mb-2'">
@@ -78,7 +78,7 @@
                 {{ product.price.current | currency }}</p>
               <div class="d-flex align-center grey--text text-body-2 mb-3">
                 <v-icon class="mr-1" :size="$vuetify.breakpoint.smAndDown ? 12 : 18">mdi-map-marker</v-icon>
-                <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{ product.location
+                <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{ product.location_details.kota
                   }}</p>
               </div>
               <div class="d-flex flex-wrap">
@@ -107,7 +107,7 @@
         <v-slide-item v-for="product in products" :key="product._id" v-show="product.variant == 'sparepart'">
           <v-card :width="$vuetify.breakpoint.smAndDown ? 175 : 320" :height="$vuetify.breakpoint.smAndDown ? 335 : 420"
             rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product._id">
-            <v-img :src="product.image[0]" max-height="250" aspect-ratio="1"></v-img>
+            <v-img :src="product.images_details[0].image" max-height="250" aspect-ratio="1"></v-img>
             <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : 'pa-4'">
               <p
                 :class="$vuetify.breakpoint.smAndDown ? 'product-name text-body-2 font-weight-medium mb-1' : 'product-name text-body-1 font-weight-medium mb-2'">
@@ -117,7 +117,46 @@
                 {{ product.price.current | currency }}</p>
               <div class="d-flex align-center grey--text text-body-2 mb-3">
                 <v-icon class="mr-1" :size="$vuetify.breakpoint.smAndDown ? 12 : 18">mdi-map-marker</v-icon>
-                <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{ product.location
+                <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{ product.location_details.kota
+                  }}</p>
+              </div>
+              <div class="d-flex flex-wrap">
+                <v-chip outlined class="mr-1 mb-2" small>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.merk_details.name }}</p>
+                </v-chip>
+                <v-chip outlined class="mr-1 mb-2" small>
+                  <v-icon size="16" class="mr-1 grey--text">mdi-calendar-month</v-icon>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.year }}</p>
+                </v-chip>
+                <v-chip outlined class="mr-1 mb-2" small>
+                  <v-icon size="16" class="mr-1 grey--text">mdi-speedometer</v-icon>
+                  <p class="text-caption font-weight-medium my-auto">{{ product.km_of_use }}</p>
+                </v-chip>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-slide-item>
+      </v-slide-group>
+    </v-container>
+
+     <!-- Merch Section -->
+     <v-container class="py-5" v-if="products.some(product => product.variant === 'merchandise')">
+      <p class="text-h6">Sparepart</p>
+      <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown">
+        <v-slide-item v-for="product in products" :key="product._id" v-show="product.variant == 'merchandise'">
+          <v-card :width="$vuetify.breakpoint.smAndDown ? 175 : 320" :height="$vuetify.breakpoint.smAndDown ? 335 : 420"
+            rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product._id">
+            <v-img :src="product.images_details[0].image" max-height="250" aspect-ratio="1"></v-img>
+            <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : 'pa-4'">
+              <p
+                :class="$vuetify.breakpoint.smAndDown ? 'product-name text-body-2 font-weight-medium mb-1' : 'product-name text-body-1 font-weight-medium mb-2'">
+                {{ product.name }}</p>
+              <p
+                :class="$vuetify.breakpoint.smAndDown ? 'text-body-1 font-weight-bold primary--text mb-2' : 'text-h6 font-weight-bold primary--text mb-3'">
+                {{ product.price.current | currency }}</p>
+              <div class="d-flex align-center grey--text text-body-2 mb-3">
+                <v-icon class="mr-1" :size="$vuetify.breakpoint.smAndDown ? 12 : 18">mdi-map-marker</v-icon>
+                <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{ product.location_details.kota
                   }}</p>
               </div>
               <div class="d-flex flex-wrap">

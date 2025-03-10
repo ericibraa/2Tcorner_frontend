@@ -30,6 +30,9 @@
         </v-card-title>
         <v-card-text class="pa-5">
           <v-data-table :headers="headers" :items="merks" :items-per-page="5">
+            <template  v-slot:item.url="{item}">
+              <v-img :src="item.url" max-width="100"></v-img>
+            </template>
             <template v-slot:item.actions="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-pencil
@@ -48,7 +51,8 @@
       </v-card>
       <v-dialog v-model="dialogDelete" max-width="500px">
         <v-card>
-          <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+          <v-card-title class="text-h5">Konfirmasi</v-card-title>
+          <v-card-text><p class="mb-0 text-body-1">Kamu yakin ingin menghapus merk ini?</p></v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" text @click="!dialogDelete">Cancel</v-btn>

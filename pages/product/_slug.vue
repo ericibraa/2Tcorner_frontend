@@ -8,16 +8,16 @@
     <v-row>
       <v-col md="8">
         <div class="box text-center">
-          <v-img :src="detailProduct.image[selectedImage]" contain max-height="370px"
+          <v-img :src="detailProduct.images_details[selectedImage].image" contain max-height="370px"
             v-if="detailProduct.image && detailProduct.image.length > 0"></v-img>
         </div>
         <div class="mt-10">
           <v-sheet class="mx-auto">
             <v-slide-group v-model="selectedImage" class="pa-0" center-active show-arrows>
-              <v-slide-item v-for="(slide, index) in detailProduct.image" :key="index"><v-img
+              <v-slide-item v-for="(slide, index) in detailProduct.images_details" :key="index"><v-img
                   class="mb-0 mr-3 agile__slide__smallest" v-bind:class="[
                     index == selectedImage ? 'agile__slide--active' : '',
-                  ]" :src="slide" contain @click="chooseimage(index)" max-width="70" max-height="70"></v-img>
+                  ]" :src="slide.image" contain @click="chooseimage(index)" max-width="70" max-height="70"></v-img>
               </v-slide-item>
             </v-slide-group>
           </v-sheet>
@@ -36,7 +36,7 @@
             <div class="d-flex">
               <v-icon size="14px" class="my-auto mr-2">mdi-map-marker</v-icon>
               <p class="text-caption grey--text mb-0">
-                Kota {{ detailProduct.location }}
+                Kota {{ detailProduct.location_details.kota }}
               </p>
             </div>
             <p class="text-h6 red--text font-weight-bold mb-0 mt-3">{{ detailProduct.price.current | currency }}</p>

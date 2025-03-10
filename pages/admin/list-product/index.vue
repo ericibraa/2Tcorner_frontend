@@ -5,7 +5,7 @@
         <v-card-title style="background: #eceff1">
           <v-btn color="light-blue" dark :to="'/admin/list-product/tambah'">Tambah Produk</v-btn>
           <v-spacer></v-spacer>
-          <v-dialog v-model="dialogupload" persistent max-width="600px">
+          <!-- <v-dialog v-model="dialogupload" persistent max-width="600px">
             <template v-slot:activator="{ on }">
               <v-btn color="primary" dark v-on="on">Upload Produk</v-btn>
             </template>
@@ -23,13 +23,19 @@
                 <v-btn color="primary" @click.stop="onUploadSelectedFileClick()" :loading="loading">UPLOAD</v-btn>
               </v-card-actions>
             </v-card>
-          </v-dialog>
+          </v-dialog> -->
           <v-flex md4 class="ml-5">
             <v-text-field append-icon="mdi-magnify" label="Search"></v-text-field>
           </v-flex>
         </v-card-title>
         <v-card-text class="pa-5">
           <v-data-table :headers="headers" :items="products" :items-per-page="5">
+            <template v-slot:item.price.normal="{ item }">
+              <p class="mb-0">Rp {{ formatToIDR(item.price.normal) }}</p>
+            </template>
+            <template v-slot:item.price.current="{ item }">
+              <p class="mb-0">Rp {{ formatToIDR(item.price.current) }}</p>
+            </template>
             <template v-slot:item.action="{ item }">
               <v-icon small class="mr-2" @click="editItem(item)">
                 mdi-pencil
@@ -37,6 +43,11 @@
               <v-icon small @click="deleteItem(item)">
                 mdi-delete
               </v-icon>
+            </template>
+            <template v-slot:item.status="{item}">
+              <v-chip label>
+                <span>{{ statusMapping[item.status] }}</span>
+              </v-chip>
             </template>
           </v-data-table>
         </v-card-text>
@@ -72,7 +83,8 @@ export default {
           value: "sku_code",
         },
         { text: "Nama Produk", value: "name" },
-        { text: "Harga", value: "price.current" },
+        { text: "Harga Normal", value: "price.normal" },
+        { text: "Harga Diskon", value: "price.current" },
         { text: "Merek", value: "merk_details.name" },
         { text: "Kategori Mesin", value: "category" },
         { text: "Tipe Motor", value: "type_details.name" },
@@ -81,11 +93,16 @@ export default {
         { text: "Jumlah KM", value: "km_of_use" },
         { text: "Grade", value: "grade" },
         { text: "Lokasi", value: "location_details.kota" },
+        { text: "Status", value: "status" },
         { text: "Action", value: "action" }
       ],
       products: [],
       deleteId: '',
-      dialogDelete: false
+      dialogDelete: false,
+      statusMapping: {
+        0: "Tidak Tampil",
+        10: "Tampil"
+      }
     };
   },
   methods: {
@@ -98,7 +115,7 @@ export default {
       }
     },
     editItem(item) {
-      this.$router.push("/admin/list-product/" + item._id)
+      this.$router.push("/admin/list-product/" + item.slug)
     },
     deleteItem(item) {
       this.dialogDelete = true,
@@ -113,6 +130,10 @@ export default {
         console.log(e);
 
       }
+    },
+    formatToIDR(value) {
+      if (!value) return "";
+      return parseInt(value).toLocaleString("id-ID");
     }
   },
   async fetch() {

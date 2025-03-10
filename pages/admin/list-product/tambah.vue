@@ -11,11 +11,12 @@
               <v-text-field label="Nama Kendaraan" outlined hide-details v-model="form.vehicle_name"></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-text-field label="Harga Kendaraan" outlined hide-details v-model="form.price.normal"></v-text-field>
+              <v-text-field label="Harga Kendaraan" outlined hide-details v-model="formattedPrice" prefix="Rp"
+                @keypress="onlyNumber"></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-text-field label="Harga Diskon Kendaraan" outlined hide-details
-                v-model="form.price.current"></v-text-field>
+              <v-text-field label="Harga Diskon Kendaraan" outlined hide-details v-model="formattedPricePromo"
+                prefix="Rp" @keypress="onlyNumber"></v-text-field>
             </v-col>
             <v-col cols="4">
               <v-select :items="merks" label="Merek Kendaraan" outlined item-text="name" item-value="_id" hide-details
@@ -30,14 +31,16 @@
                 hide-details v-model="form.vehicle_category"></v-select>
             </v-col>
             <v-col cols="4">
-              <v-text-field label="CC Kendaraan" outlined hide-details v-model="form.vehicle_cc"></v-text-field>
+              <v-text-field label="CC Kendaraan" outlined hide-details v-model="form.vehicle_cc"
+                @keypress="onlyNumber"></v-text-field>
             </v-col>
             <v-col cols="4">
-              <v-text-field label="Tahun Kendaraan" outlined hide-details v-model="form.vehicle_years"></v-text-field>
+              <v-text-field label="Tahun Kendaraan" outlined hide-details v-model="form.vehicle_years"
+                @keypress="onlyNumber"></v-text-field>
             </v-col>
             <v-col cols="4">
-              <v-text-field label="Jumlah KM Kendaraan" outlined hide-details
-                v-model="form.vehicle_kilometers"></v-text-field>
+              <v-text-field label="Jumlah KM Kendaraan" outlined hide-details v-model="form.vehicle_kilometers"
+                @keypress="onlyNumber"></v-text-field>
             </v-col>
             <v-col cols="4">
               <v-select :items="grade" label="Grade Kendaraan" outlined item-text="name" hide-details
@@ -48,27 +51,31 @@
                 v-model="form.location"></v-select>
             </v-col>
             <v-col cols="4">
-              <v-select :items="variant" label="Variant" outlined item-text="name" item-value="value"
-                hide-details v-model="form.variant"></v-select>
+              <v-select :items="variant" label="Variant" outlined item-text="name" item-value="value" hide-details
+                v-model="form.variant"></v-select>
             </v-col>
             <v-col cols="6">
               <v-text-field label="Link Instagram (Optional)" outlined hide-details
                 v-model="form.instagram"></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-text-field label="Link Youtube (Optional)" outlined hide-details
-                v-model="form.youtube"></v-text-field>
+              <v-text-field label="Link Youtube (Optional)" outlined hide-details v-model="form.youtube"></v-text-field>
             </v-col>
-            <v-col cols="10">
-              <v-text-field label="Link Image Kendaraan" outlined hide-details v-model="form.image"></v-text-field>
-            </v-col>
-            <v-col cols="2" class="my-auto">
-              <v-btn @click="addImage()" color="red" dark block>Add Image</v-btn>
-            </v-col>
-            <v-col cols="12" v-if="imgTemp != []">
+            <v-col cols="12">
               <div class="d-flex">
-                <v-img v-for="img in imgTemp" :key="img" :src="img" aspect-ratio="1" max-height="200" max-width="200"
-                  class="mr-3"></v-img>
+                <div class="image-card" v-for="img in medias" :key="img.id">
+                  <p>{{ img._id }}</p>
+                  <v-img :src="img.url" max-width="150" class="mr-3"></v-img>
+                  <v-btn class="delete-btn" icon color="red" @click="deleteImg(img.id)">
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </div>
+                <v-card class="upload-card" @click="dialog = true">
+                  <v-card-text class="d-flex flex-column align-center justify-center">
+                    <v-icon size="48">mdi-image-plus</v-icon>
+                    <p class="text-center mb-0">Tambah Gambar</p>
+                  </v-card-text>
+                </v-card>
               </div>
             </v-col>
             <v-col cols="12">
@@ -82,6 +89,22 @@
         </v-card-text>
       </v-card>
     </div>
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title class="headline">Upload Image</v-card-title>
+
+        <v-card-text>
+          <input label="File input" filled accept="image/*" prepend-icon="mdi-camera" type="file" ref="fileInput"
+            @change="changeFile" />
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red" text @click="dialog = false">Cancel</v-btn>
+          <v-btn color="green" text @click="saveMedia()" :disabled="!imageFile">Upload</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -90,6 +113,7 @@ export default {
   middleware: "auth",
   data() {
     return {
+      dialog: false,
       merks: [],
       types: [],
       locations: [],
@@ -114,6 +138,8 @@ export default {
         instagram: '',
         youtube: ''
       },
+      imageFile: false,
+      medias: [],
       imgTemp: [],
       mechine: [
         {
@@ -149,11 +175,11 @@ export default {
       ],
       variant: [
         {
-          name: "Vehicle",
+          name: "Kendaraan",
           value: "vehicle"
         },
         {
-          name: "Sparepart",
+          name: "Suku Cadang",
           value: "sparepart"
         },
         {
@@ -163,7 +189,57 @@ export default {
       ]
     };
   },
+  computed: {
+    formattedPrice: {
+      get() {
+        return this.formatToIDR(this.form.price.normal);
+      },
+      set(value) {
+        this.form.price.normal = value.replace(/\D/g, '');
+      }
+    },
+    formattedPricePromo: {
+      get() {
+        return this.formatToIDR(this.form.price.current);
+      },
+      set(value) {
+        this.form.price.current = value.replace(/\D/g, '');
+      }
+    }
+  },
   methods: {
+    changeFile() {
+      let file = this.$refs.fileInput.files[0];
+      this.imageFile = file
+    },
+    async saveMedia() {
+      const formData = new FormData();
+      if (this.imageFile) {
+        formData.append("file", this.imageFile)
+      }
+      try {
+        let data = await this.$axios.$post(this.$config.api + "/upload", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        this.medias.push(data)
+        console.log(this.medias);
+
+        this.dialog = false
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async deleteImg(id) {
+      try {
+        await this.$axios.$delete(this.$config.api + `/upload/${id}`);
+        this.medias = this.medias.filter((img) => img.id !== id);
+        console.log("Image deleted successfully");
+      } catch (error) {
+        console.error("Failed to delete image:", error);
+      }
+    },
     async getMerks() {
       try {
         var merk = await this.$axios.$get(this.$config.api + "/merk")
@@ -185,9 +261,9 @@ export default {
       try {
         var location = await this.$axios.$get(this.$config.api + "/location")
         this.locations = location.data
-      } catch(e) {
+      } catch (e) {
         console.log(e);
-        
+
       }
     },
     async submitProduct() {
@@ -198,11 +274,11 @@ export default {
           type: this.form.type,
           category: this.form.vehicle_category,
           location: this.form.location,
-          image: this.imgTemp,
+          image: this.medias.map(item => item.id),
           sku_code: this.form.sku_code,
           price: {
-            current: this.form.price.current,
-            normal: this.form.price.normal
+            current: this.formattedPricePromo.replaceAll(".", ""),
+            normal: this.formattedPrice.replaceAll(".", "")
           },
           cc: this.form.vehicle_cc,
           year: this.form.vehicle_years,
@@ -219,9 +295,14 @@ export default {
 
       }
     },
-    addImage() {
-      this.imgTemp.push(this.form.image);
-      this.form.image = ''
+    onlyNumber(event) {
+      if (!/[0-9]/.test(event.key)) {
+        event.preventDefault();
+      }
+    },
+    formatToIDR(value) {
+      if (!value) return "";
+      return parseInt(value).toLocaleString("id-ID");
     }
   },
   async fetch() {
@@ -231,3 +312,35 @@ export default {
   }
 };
 </script>
+<style scoped>
+.upload-card {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  border: 2px dashed #ccc;
+  background-color: #f9f9f9;
+  transition: 0.3s;
+}
+
+.upload-card:hover {
+  background-color: #e0e0e0;
+}
+
+.image-card {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: white !important;
+  border-radius: 50%;
+}
+</style>

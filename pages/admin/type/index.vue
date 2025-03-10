@@ -5,31 +5,15 @@
           <v-card-title style="background: #eceff1">
             <v-btn color="light-blue" dark :to="'/admin/type/new'">Tambah Type</v-btn>
             <v-spacer></v-spacer>
-            <v-dialog v-model="dialogupload" persistent max-width="600px">
-              <template v-slot:activator="{ on }">
-                <v-btn color="primary" dark v-on="on">Upload Type</v-btn>
-              </template>
-              <v-card>
-                <v-card-title>
-                  <p class="text-h6">Upload file</p>
-                </v-card-title>
-                <v-card-text>
-                  <v-text-field label="Select CSV / Excel File..." prepend-icon="mdi-file"></v-text-field>
-                  <input type="file" style="display: none" ref="fileInput" accept="*/*" />
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn @click="dialogupload = false">close</v-btn>
-                  <v-btn color="primary" @click.stop="onUploadSelectedFileClick()" :loading="loading">UPLOAD</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
             <v-flex md4 class="ml-5">
               <v-text-field append-icon="mdi-magnify" label="Search"></v-text-field>
             </v-flex>
           </v-card-title>
           <v-card-text class="pa-5">
             <v-data-table :headers="headers" :items="types" :items-per-page="5">
+              <template v-slot:item.image="{ item }">
+                <v-img :src="item.image" max-width="100"></v-img>
+              </template>
               <template v-slot:item.actions="{ item }">
                 <v-icon small class="mr-2" @click="editItem(item)">
                   mdi-pencil
@@ -67,7 +51,6 @@
     data() {
       return {
         search: "",
-        dialogupload: false,
         loading: false,
         headers: [
           {
@@ -75,6 +58,10 @@
             align: "start",
             sortable: false,
             value: "name",
+          },
+          {
+            text: "Image",
+            value: "image",
           },
           { text: "Action", value: "actions" },
         ],

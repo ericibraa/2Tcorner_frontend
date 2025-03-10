@@ -1,37 +1,16 @@
 <template>
-    <v-container>
-        <div>
-            <v-card>
-                <v-card-title style="background: #eceff1">
-                    <p>Tambah Merk</p>
-                </v-card-title>
-                <v-card-text class="pa-5">
-                    <v-row>
-                        <v-col cols="12">
-                            <v-text-field label="Merk Kendaraan" outlined hide-details v-model="merk"></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <div class="d-flex">
-                                <div class="image-card" v-if="media != ''">
-                                    <v-img :src="media" max-width="150" class="mr-3"></v-img>
-                                    <v-btn class="delete-btn" icon color="red" @click="deleteImg(medias._id)">
-                                        <v-icon>mdi-delete</v-icon>
-                                    </v-btn>
-                                </div>
-                                <v-card class="upload-card" @click="dialog = true"
-                                    v-if="media == ''">
-                                    <v-card-text class="d-flex flex-column align-center justify-center">
-                                        <v-icon size="48">mdi-image-plus</v-icon>
-                                        <p class="text-center mb-0">Tambah Gambar</p>
-                                    </v-card-text>
-                                </v-card>
-                            </div>
-                        </v-col>
-                    </v-row>
-                </v-card-text>
-                <v-card-text class="text-end">
-                    <v-btn class="mr-3" to="/admin/merek">Kembali</v-btn>
-                    <v-btn color="red" dark @click="submitMerk()">Simpan</v-btn>
+    <div>
+        <div class="d-flex">
+            <div class="image-card" v-if="Object.keys(medias).length > 0">
+                <v-img :src="medias.image" max-width="150" class="mr-3"></v-img>
+                <v-btn class="delete-btn" icon color="red" @click="deleteImg(medias._id)">
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+            </div>
+            <v-card class="upload-card" @click="dialog = true" v-if="Object.keys(medias).length < 1">
+                <v-card-text class="d-flex flex-column align-center justify-center">
+                    <v-icon size="48">mdi-image-plus</v-icon>
+                    <p class="text-center mb-0">Tambah Gambar</p>
                 </v-card-text>
             </v-card>
         </div>
@@ -51,19 +30,15 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-    </v-container>
+    </div>
 </template>
 <script>
 export default {
-    layout: "admin",
-    middleware: "auth",
     data() {
         return {
-            merk: "",
             dialog: false,
             imageFile: false,
             medias: {},
-            media: ""
         };
     },
     methods: {
@@ -83,7 +58,8 @@ export default {
                     }
                 })
                 this.medias = data
-                this.media = this.medias.image
+                this.$emit('update-data', this.medias);
+                console.log(this.medias);
 
                 this.dialog = false
             } catch (e) {
@@ -92,11 +68,10 @@ export default {
         },
         async deleteImg(id) {
             try {
-                // await this.$axios.$delete(this.$config.api + `/upload/${id}`);
-                // if (this.medias._id === id) {
-                //     this.medias = {};
-                // }
-                this.media = ""
+                await this.$axios.$delete(this.$config.api + `/upload/${id}`);
+                if (this.medias._id === id) {
+                    this.medias = {};
+                }
                 console.log("Image deleted successfully");
             } catch (error) {
                 console.error("Failed to delete image:", error);
@@ -104,9 +79,9 @@ export default {
         },
         async submitMerk() {
             try {
-                await this.$axios.$put(this.$config.api + "/merk/" + this.$route.params.id, {
+                await this.$axios.$post(this.$config.api + "/merk/", {
                     name: this.merk,
-                    url: this.media,
+                    url: this.medias.image,
                 });
                 this.$router.push({ path: "/admin/merek" });
             } catch (e) {
@@ -115,18 +90,7 @@ export default {
         },
         addImage() {
             this.imgTemp.push(this.imgMerk)
-            this, this.imgMerk = ""
-        }
-    },
-    async fetch() {
-        try {
-            var merkD = await this.$axios.$get(this.$config.api + "/merk/" + this.$route.params.id)
-            this.detailMerk = merkD
-            this.merk = this.detailMerk.name,
-            this.media = this.detailMerk.url
-        } catch (e) {
-            console.log(e);
-
+            this.imgMerk = ''
         }
     },
 };
