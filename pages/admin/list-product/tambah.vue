@@ -64,9 +64,8 @@
             <v-col cols="12">
               <div class="d-flex">
                 <div class="image-card" v-for="img in medias" :key="img.id">
-                  <p>{{ img._id }}</p>
-                  <v-img :src="img.url" max-width="150" class="mr-3"></v-img>
-                  <v-btn class="delete-btn" icon color="red" @click="deleteImg(img.id)">
+                  <v-img :src="img.image" max-width="150" class="mr-3"></v-img>
+                  <v-btn class="delete-btn" icon color="red" @click="deleteImg(img._id)">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </div>
@@ -274,7 +273,7 @@ export default {
           type: this.form.type,
           category: this.form.vehicle_category,
           location: this.form.location,
-          image: this.medias.map(item => item.id),
+          image: this.medias.map(item => item._id),
           sku_code: this.form.sku_code,
           price: {
             current: this.formattedPricePromo.replaceAll(".", ""),

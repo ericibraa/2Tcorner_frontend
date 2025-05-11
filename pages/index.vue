@@ -24,8 +24,6 @@
                   <v-text-field label="Cari motor berdasarkan brand, model, dll"
                     :class="$vuetify.breakpoint.smAndDown ? 'form-radius mb-3' : 'form-radius mb-5 mx-5'" outlined hide-details v-model="search"
                     v-on:keyup.enter="search_products"></v-text-field>
-                  <v-img :class="$vuetify.breakpoint.smAndDown ? '' : 'mx-5'"
-                    :src="require('~/assets/images/staticImg/example.png')"></v-img>
                   <v-slide-group show-arrows="never">
                     <v-slide-item v-for="tipe of typeVehicle" :key="tipe._id">
                         <div class="shadow-box-type mt-7" @click="search_by_type(tipe._id)">

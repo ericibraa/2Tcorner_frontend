@@ -48,8 +48,8 @@
           <v-col v-for="product of products" :key="product.name" lg="4" md="4" sm="6" class="pa-0 justufy-center">
             <v-card :height="$vuetify.breakpoint.smAndDown ? 335 : 420" rounded="xxl" class="shadow-box-card ma-2"
               :href="'/product/' + product._id">
-              <v-img :src="product.image[0]" max-height="250" aspect-ratio="1"></v-img>
-              <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : 'pa-2'">
+              <v-img :src="product.images_details[0].image" max-height="250" aspect-ratio="1" contain></v-img>
+              <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : ''">
                 <p
                   :class="$vuetify.breakpoint.smAndDown ? 'product-name text-body-2 font-weight-medium mb-1' : 'product-name text-body-1 font-weight-medium mb-2'">
                   {{ product.name }}</p>
@@ -59,7 +59,7 @@
                 <div class="d-flex align-center grey--text text-body-2 mb-3">
                   <v-icon class="mr-1" :size="$vuetify.breakpoint.smAndDown ? 12 : 18">mdi-map-marker</v-icon>
                   <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{
-                    product.location
+                    product.location_details.kota
                     }}</p>
                 </div>
                 <div class="d-flex flex-wrap">
@@ -98,8 +98,6 @@ export default {
   },
   methods: {
     async getProducts() {
-      console.log("=========================");
-      
       try {
         let product = await this.$axios.$get(this.$config.api + "/products",
           {
