@@ -96,6 +96,7 @@ export default {
       type: ""
     }
   },
+  
   methods: {
     async getProducts() {
       try {

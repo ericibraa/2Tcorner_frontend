@@ -24,9 +24,12 @@
         </div>
         <div class="mt-10">
           <p class="text-body-1 mb-2">Detail Produk</p>
-          <p class="text-body-2">{{ detailProduct.description }}</p>
-          <iframe width="300" height="500" :src="detailProduct.instagram" frameborder="0" v-if="detailProduct.instagram"></iframe>
-          <iframe width="300" height="500" :src="detailProduct.youtube" frameborder="0" v-if="detailProduct.youtube"></iframe>
+          <div v-html="detailProduct.description" class="editor-content"></div>
+          <!-- <p class="text-body-2">{{ detailProduct.description }}</p> -->
+          <iframe width="300" height="500" :src="detailProduct.instagram" frameborder="0"
+            v-if="detailProduct.instagram"></iframe>
+          <iframe width="300" height="500" :src="detailProduct.youtube" frameborder="0"
+            v-if="detailProduct.youtube"></iframe>
         </div>
       </v-col>
       <v-col md="4">
@@ -39,7 +42,13 @@
                 Kota {{ detailProduct.location_details.kota }}
               </p>
             </div>
-            <p class="text-h6 red--text font-weight-bold mb-0 mt-3">{{ detailProduct.price.current | currency }}</p>
+            <div v-if="detailProduct.price.current < detailProduct.price.normal" class="d-flex mt-3">
+              <p class="text-h6 red--text font-weight-bold mb-0 mr-2">{{ detailProduct.price.current | currency }}</p>
+              <p class="text-body-2 grey--text font-weight-thin my-auto text-decoration-line-through">{{ detailProduct.price.normal | currency }}</p>
+            </div>
+            <div v-else>
+              <p class="text-h6 red--text font-weight-bold mb-0 mt-3">{{ detailProduct.price.current | currency }}</p>
+            </div>
             <v-divider class="my-3"></v-divider>
             <div class="d-flex justify-space-between pb-3">
               <div class="d-flex">
@@ -73,7 +82,8 @@
             <p class="text-body-2 text-center">
               Untuk pemesanan langsung hubungi WhatsApp Admin
             </p>
-            <v-btn block color="#0FBE55" dark> Hubungi WhatsApp </v-btn>
+            <v-btn block color="#0FBE55" dark :href="'https://wa.me/628577257834?text=Halo%2C%20saya%20tertarik%20dengan%20produk%20'+detailProduct.name" target="_blank"> Hubungi WhatsApp
+            </v-btn>
           </v-card-text>
         </v-card>
       </v-col>
@@ -138,5 +148,12 @@ export default {
   opacity: 1;
   border-radius: 10px;
   border: 2px solid red;
+}
+
+.editor-content img {
+  max-width: 100%; /* Gambar tidak akan melebihi container */
+  height: auto; /* Menjaga aspek rasio */
+  display: block; /* Mencegah celah di bawah gambar */
+  margin: 0 auto; /* Pusatkan gambar */
 }
 </style>

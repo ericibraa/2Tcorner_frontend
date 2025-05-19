@@ -78,7 +78,10 @@
               </div>
             </v-col>
             <v-col cols="12">
-              <v-textarea v-model="form.description" label="Deskripsi" full-width></v-textarea>
+              <client-only>
+                <p class="caption grey--text text--darken-2">Description</p>
+                <VueEditor id="descEditor" v-model="form.description" @image-added="uploadImage" />
+              </client-only>
             </v-col>
           </v-row>
         </v-card-text>
@@ -210,6 +213,21 @@ export default {
     changeFile() {
       let file = this.$refs.fileInput.files[0];
       this.imageFile = file
+    },
+    async uploadImage(file, insertImage) {
+      const formData = new FormData();
+      try {
+        let data = await this.$axios.$post(this.$config.api + "/upload", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        this.media = data
+
+        insertImage(this.media.image);
+      } catch (e) {
+        console.log(e)
+      }
     },
     async saveMedia() {
       const formData = new FormData();

@@ -17,18 +17,51 @@
 
             <!-- Social Media Icons -->
             <div class="d-flex justify-center mt-4 mb-5">
-              <v-btn icon class="mr-5" href="https://www.facebook.com/2tak.corner" target="_blank">
+              <v-btn icon class="mr-5" href="https://www.facebook.com/2tak.corner" target="_blank"
+                style="background-color: black; border-radius: 50%; width: 48px; height: 48px;">
                 <v-img :src="require('~/assets/images/logo/facebook.png')" width="40" height="40"></v-img>
               </v-btn>
-              <v-btn icon class="mr-5" href="https://www.tiktok.com/tag/2tcorner" target="_blank">
+              <v-btn icon class="mr-5" href="https://www.tiktok.com/tag/2tcorner" target="_blank"
+                style="background-color: black; border-radius: 50%; width: 48px; height: 48px;">
                 <v-img :src="require('~/assets/images/logo/tiktok.png')" width="40" height="40"></v-img>
               </v-btn>
-              <v-btn icon class="mr-5" href="https://www.instagram.com/2tcorner/?hl=en" target="_blank">
-                <v-img :src="require('~/assets/images/logo/instagram.png')" width="40" height="40"></v-img>
+              <v-btn icon class="mr-5" href="https://www.instagram.com/2tcorner/?hl=en" target="_blank"
+                style="background-color: black; border-radius: 50%; width: 48px; height: 48px;">
+                <v-img :src="require('~/assets/images/logo/instagram.png')" width="30" height="30"></v-img>
               </v-btn>
-              <v-btn icon class="mr-5" href="https://www.youtube.com/channel/UCQxTDIS0zZs3vLHU3j40URg" target="_blank">
-                <v-img :src="require('~/assets/images/logo/youtube.png')" width="40" height="40"></v-img>
+              <!-- YouTube Button -->
+              <v-btn icon class="mr-5" href="https://www.youtube.com/channel/UCQxTDIS0zZs3vLHU3j40URg" target="_blank"
+                style="background-color: black; border-radius: 50%; width: 48px; height: 48px;">
+                <v-img :src="require('~/assets/images/logo/youtube.png')" width="40" height="40" contain
+                  class="pa-2"></v-img>
               </v-btn>
+
+              <!-- Blibli Button -->
+              <v-btn icon class="mr-5" href="https://blibli.onelink.me/GNtk/0et8biz8" target="_blank"
+                style="background-color: black; border-radius: 50%; width: 48px; height: 48px;">
+                <v-img :src="require('~/assets/images/logo/blibli-logo.png')" width="24" height="24" contain
+                  class="pa-2"></v-img>
+              </v-btn>
+
+              <!-- Shopee Button -->
+              <v-btn icon class="mr-5" href="https://shopee.co.id/shop/306391330" target="_blank"
+                style="background-color: black; border-radius: 100%; width: 48px; height: 48px;">
+                <v-img :src="require('~/assets/images/logo/shopee.jpg')" width="50" height="50" contain class="pa-2"
+                  style="border-radius: 50%;"></v-img>
+              </v-btn>
+              <!-- Tokopedia Button -->
+              <v-btn icon class="mr-5" href="https://www.tokopedia.com/toko2tcorner" target="_blank"
+                style="background-color: black; border-radius: 50%; width: 48px; height: 48px;">
+                <v-img :src="require('~/assets/images/logo/tokopedia-logo.png')" width="20" height="20" contain
+                  class="pa-2"></v-img>
+              </v-btn>
+              <v-btn icon class="mr-5"
+                href="https://www.lazada.co.id/shop/2tcorner/?spm=a2o4j.pdp_revamp.seller.1.71302dfdqvwThQ&itemId=8334556189&channelSource=pdp"
+                target="_blank" style="background-color: black; border-radius: 50%; width: 48px; height: 48px;">
+                <v-img :src="require('~/assets/images/logo/lazada.png')" width="50" height="50" contain
+                  class="pa-2" style="border-radius: 50%;"></v-img>
+              </v-btn>
+
             </div>
           </v-col>
 
@@ -49,7 +82,7 @@
       <v-card-text class="py-2 white--text text-center">
         <div class="d-flex justify-center align-center">
           <v-icon class="white--text">mdi-copyright</v-icon>
-          <p class="my-auto ml-2">{{ new Date().getFullYear() }} - 2TCORNER</p>
+          <p class="my-auto ml-2">PT. Kreasi Zayan Group {{ new Date().getFullYear() }} - 2TCORNER</p>
         </div>
       </v-card-text>
     </v-card>

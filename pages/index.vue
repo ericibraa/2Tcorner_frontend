@@ -5,8 +5,9 @@
     <div :class="$vuetify.breakpoint.smAndDown ? '' : 'carousel pb-5'">
       <v-carousel cycle hide-delimiter-background continuous hide-delimiters show-arrows-on-hover width="1200"
         height="auto" class="slider">
-        <v-carousel-item>
-          <v-img :src="require('~/assets/images/staticImg/MainBannerRev.png')"></v-img>
+        <v-carousel-item v-for="banner in banners" :key="banner._id">
+          <!-- <v-img :src="require('~/assets/images/staticImg/MainBannerRev.png')"></v-img> -->
+          <v-img :src="banner.image"></v-img>
         </v-carousel-item>
       </v-carousel>
     </div>
@@ -22,14 +23,14 @@
                 <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-0' : ''">
                   <p :class="$vuetify.breakpoint.smAndDown ? 'text-h6' : 'text-h6 mx-5'">Mau cari motor?</p>
                   <v-text-field label="Cari motor berdasarkan brand, model, dll"
-                    :class="$vuetify.breakpoint.smAndDown ? 'form-radius mb-3' : 'form-radius mb-5 mx-5'" outlined hide-details v-model="search"
-                    v-on:keyup.enter="search_products"></v-text-field>
+                    :class="$vuetify.breakpoint.smAndDown ? 'form-radius mb-3' : 'form-radius mb-5 mx-5'" outlined
+                    hide-details v-model="search" v-on:keyup.enter="search_products"></v-text-field>
                   <v-slide-group show-arrows="never">
                     <v-slide-item v-for="tipe of typeVehicle" :key="tipe._id">
-                        <div class="shadow-box-type mt-7" @click="search_by_type(tipe._id)">
-                          <v-img :src="tipe.image" max-height="70" max-width="125" contain></v-img>
-                          <p class="text-center text-body-2 my-2">{{ tipe.name }}</p>
-                        </div>
+                      <div class="shadow-box-type mt-7" @click="search_by_type(tipe._id)">
+                        <v-img :src="tipe.image" max-height="70" max-width="125" contain></v-img>
+                        <p class="text-center text-body-2 my-2">{{ tipe.name }}</p>
+                      </div>
                     </v-slide-item>
                   </v-slide-group>
                 </v-card-text>
@@ -59,137 +60,16 @@
       </v-container>
     </div>
 
-    <!-- Popular Motor Section -->
-    <v-container class="py-5" v-if="products.some(product => product.variant === 'vehicle')">
-      <p class="text-h6">Motor Populer</p>
-      <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown">
-        <v-slide-item v-for="product in products" :key="product._id" v-show="product.variant == 'vehicle'">
-          <v-card :width="$vuetify.breakpoint.smAndDown ? 175 : 320" :height="$vuetify.breakpoint.smAndDown ? 335 : 420"
-            rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product.slug">
-            <v-img :src="product.images_details[0].image" max-height="250" aspect-ratio="1"></v-img>
-            <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : 'pa-4'">
-              <p
-                :class="$vuetify.breakpoint.smAndDown ? 'product-name text-body-2 font-weight-medium mb-1' : 'product-name text-body-1 font-weight-medium mb-2'">
-                {{ product.name }}</p>
-              <p
-                :class="$vuetify.breakpoint.smAndDown ? 'text-body-1 font-weight-bold primary--text mb-2' : 'text-h6 font-weight-bold primary--text mb-3'">
-                {{ product.price.current | currency }}</p>
-              <div class="d-flex align-center grey--text text-body-2 mb-3">
-                <v-icon class="mr-1" :size="$vuetify.breakpoint.smAndDown ? 12 : 18">mdi-map-marker</v-icon>
-                <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{ product.location_details.kota
-                  }}</p>
-              </div>
-              <div class="d-flex flex-wrap">
-                <v-chip outlined class="mr-1 mb-2" small>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.merk_details.name }}</p>
-                </v-chip>
-                <v-chip outlined class="mr-1 mb-2" small>
-                  <v-icon size="16" class="mr-1 grey--text">mdi-calendar-month</v-icon>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.year }}</p>
-                </v-chip>
-                <v-chip outlined class="mr-1 mb-2" small>
-                  <v-icon size="16" class="mr-1 grey--text">mdi-speedometer</v-icon>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.km_of_use }}</p>
-                </v-chip>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-slide-item>
-      </v-slide-group>
-    </v-container>
+    <ProductSlider :products="products" title="Motor Populer" variant="vehicle" />
 
-    <!-- Sparepart Section -->
-    <v-container class="py-5" v-if="products.some(product => product.variant === 'sparepart')">
-      <p class="text-h6">Sparepart</p>
-      <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown">
-        <v-slide-item v-for="product in products" :key="product._id" v-show="product.variant == 'sparepart'">
-          <v-card :width="$vuetify.breakpoint.smAndDown ? 175 : 320" :height="$vuetify.breakpoint.smAndDown ? 335 : 420"
-            rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product._id">
-            <v-img :src="product.images_details[0].image" max-height="250" aspect-ratio="1"></v-img>
-            <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : 'pa-4'">
-              <p
-                :class="$vuetify.breakpoint.smAndDown ? 'product-name text-body-2 font-weight-medium mb-1' : 'product-name text-body-1 font-weight-medium mb-2'">
-                {{ product.name }}</p>
-              <p
-                :class="$vuetify.breakpoint.smAndDown ? 'text-body-1 font-weight-bold primary--text mb-2' : 'text-h6 font-weight-bold primary--text mb-3'">
-                {{ product.price.current | currency }}</p>
-              <div class="d-flex align-center grey--text text-body-2 mb-3">
-                <v-icon class="mr-1" :size="$vuetify.breakpoint.smAndDown ? 12 : 18">mdi-map-marker</v-icon>
-                <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{ product.location_details.kota
-                  }}</p>
-              </div>
-              <div class="d-flex flex-wrap">
-                <v-chip outlined class="mr-1 mb-2" small>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.merk_details.name }}</p>
-                </v-chip>
-                <v-chip outlined class="mr-1 mb-2" small>
-                  <v-icon size="16" class="mr-1 grey--text">mdi-calendar-month</v-icon>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.year }}</p>
-                </v-chip>
-                <v-chip outlined class="mr-1 mb-2" small>
-                  <v-icon size="16" class="mr-1 grey--text">mdi-speedometer</v-icon>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.km_of_use }}</p>
-                </v-chip>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-slide-item>
-      </v-slide-group>
-    </v-container>
+    <ProductSlider :products="products" title="Sparepart" variant="sparepart" />
 
-     <!-- Merch Section -->
-     <v-container class="py-5" v-if="products.some(product => product.variant === 'merchandise')">
-      <p class="text-h6">Sparepart</p>
-      <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown">
-        <v-slide-item v-for="product in products" :key="product._id" v-show="product.variant == 'merchandise'">
-          <v-card :width="$vuetify.breakpoint.smAndDown ? 175 : 320" :height="$vuetify.breakpoint.smAndDown ? 335 : 420"
-            rounded="xxl" class="shadow-box-card ma-4" :href="'/product/' + product._id">
-            <v-img :src="product.images_details[0].image" max-height="250" aspect-ratio="1"></v-img>
-            <v-card-text :class="$vuetify.breakpoint.smAndDown ? 'pa-2' : 'pa-4'">
-              <p
-                :class="$vuetify.breakpoint.smAndDown ? 'product-name text-body-2 font-weight-medium mb-1' : 'product-name text-body-1 font-weight-medium mb-2'">
-                {{ product.name }}</p>
-              <p
-                :class="$vuetify.breakpoint.smAndDown ? 'text-body-1 font-weight-bold primary--text mb-2' : 'text-h6 font-weight-bold primary--text mb-3'">
-                {{ product.price.current | currency }}</p>
-              <div class="d-flex align-center grey--text text-body-2 mb-3">
-                <v-icon class="mr-1" :size="$vuetify.breakpoint.smAndDown ? 12 : 18">mdi-map-marker</v-icon>
-                <p :class="$vuetify.breakpoint.smAndDown ? 'mb-0 text-caption' : 'text-body-2 mb-0'">{{ product.location_details.kota
-                  }}</p>
-              </div>
-              <div class="d-flex flex-wrap">
-                <v-chip outlined class="mr-1 mb-2" small>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.merk_details.name }}</p>
-                </v-chip>
-                <v-chip outlined class="mr-1 mb-2" small>
-                  <v-icon size="16" class="mr-1 grey--text">mdi-calendar-month</v-icon>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.year }}</p>
-                </v-chip>
-                <v-chip outlined class="mr-1 mb-2" small>
-                  <v-icon size="16" class="mr-1 grey--text">mdi-speedometer</v-icon>
-                  <p class="text-caption font-weight-medium my-auto">{{ product.km_of_use }}</p>
-                </v-chip>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-slide-item>
-      </v-slide-group>
-    </v-container>
+    <ProductSlider :products="products" title="Merchandise" variant="merchandise" />
 
     <!-- Berita Otomotif Section -->
     <div class="shadow-box my-5">
       <v-container class="py-5">
         <p class="text-h6">Berita Otomotif</p>
-        <!-- <div class="mb-4">
-          <v-chip v-for="article in articles" :key="article.id"
-            :color="selectedArticle.id === article.id ? 'primary' : ''" @click="setArticle(article)"
-            :outlined="selectedArticle.id !== article.id" class="text-center mr-2 mb-2">
-            <p :class="selectedArticle.id !== article.id ? 'black--text' : 'white--text'"
-              class="text-overline mb-0 text-center mx-auto">
-              {{ article.name }}
-            </p>
-          </v-chip>
-        </div> -->
         <v-slide-group :show-arrows="!$vuetify.breakpoint.smAndDown" class="mb-4">
           <v-slide-item v-for="(article, i) of articles" :key="article.title + i">
             <v-card :width="$vuetify.breakpoint.smAndDown ? 300 : 350"
@@ -204,7 +84,7 @@
                   </p>
                   <p :class="$vuetify.breakpoint.smAndDown ? 'text-caption article-truncate' : 'text-body-2'">{{
                     article.short_desc
-                  }}</p>
+                    }}</p>
                 </div>
                 <v-divider></v-divider>
                 <div class="d-flex justify-space-between mt-2">
@@ -233,34 +113,20 @@
         </v-card-text>
       </v-card>
     </v-container>
-
-    <!-- Service Section -->
-    <!-- <v-container>
-      <v-card flat class="my-10 py-6 px-8">
-        <v-card-title class="justify-center">
-          <p class="text-h4">Kenapa harus pilih 2tcorner?</p>
-        </v-card-title>
-        <v-card-text>
-          <v-row>
-            <v-col md="3" lg="3" sm="6" xs="12" v-for="(benefit, index) in ourService" :key="index"
-              class="text-center py-4">
-              <v-card outlined class="pa-4 hover-card">
-                <v-img :src="benefit" contain max-height="100" class="mb-3"></v-img>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-container> -->
   </div>
 </template>
 
 
 <script>
-import { TriggerOpTypes } from 'vue';
+import ProductSlider from '../components/ProductSlider.vue';
 
 export default {
   name: "IndexPage",
+  head() {
+    return {
+      title: "2TCorner No. 1 Titip Jual dan Beli Motor 2 Tak Pertama di Indonesia Paling Aman dan Terpercaya"
+    }
+  },
   data() {
     return {
       ourService: [
@@ -317,7 +183,8 @@ export default {
         name: "Trending",
       },
       articles: [],
-      products: []
+      products: [],
+      banners: []
     };
   },
   methods: {
@@ -356,12 +223,22 @@ export default {
       this.$router
         .replace({ path: "/katalog", query: { type: type } })
         .then(() => this.$nuxt.refresh());
+    },
+    async getBanner() {
+      try {
+        let banner = await this.$axios.$get(this.$config.api + "/banner");
+        this.banners = banner.data
+      } catch (e) {
+        console.log(e);
+
+      }
     }
   },
   async fetch() {
     await this.getArticles();
     await this.getProducts();
     await this.getTypevehicle();
+    await this.getBanner()
   }
 };
 </script>
@@ -383,6 +260,7 @@ export default {
 .shadow-box-type {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .shadow-box-type:hover {
   transform: translateY(-4px);
 }

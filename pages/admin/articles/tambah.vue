@@ -29,7 +29,7 @@
                     </v-row>
                 </v-card-text>
                 <v-card-text class="text-end">
-                    <v-btn class="mr-3" to="/admin/merek">Kembali</v-btn>
+                    <v-btn class="mr-3" to="/admin/articles">Kembali</v-btn>
                     <v-btn class="mr-3" @click="submitArticle(1)">Draft</v-btn>
                     <v-btn color="red" dark @click="submitArticle()">Simpan & Tampilkan</v-btn>
                 </v-card-text>

@@ -79,9 +79,10 @@ export default {
       admins: [
         ["Produk", "/admin/list-product"],
         ["Merek", "/admin/merek"],
-        ["tipe", "/admin/type"],
-        ["lokasi", "/admin/location"],
-        ["article", "/admin/articles"]
+        ["Tipe", "/admin/type"],
+        ["Lokasi", "/admin/location"],
+        ["Article", "/admin/articles"],
+        ["Main Banner", "/admin/banner"],
       ],
       miniVariant: false,
     };
