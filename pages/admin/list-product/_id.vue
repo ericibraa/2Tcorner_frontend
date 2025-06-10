@@ -20,11 +20,11 @@
             </v-col>
             <v-col cols="4">
               <v-select :items="merks" label="Merek Kendaraan" outlined item-text="name" item-value="_id" hide-details
-                v-model="form.merk"></v-select>
+                v-model="form.merk" :return-object="true"></v-select>
             </v-col>
             <v-col cols="4">
               <v-select :items="types" label="Tipe Kendaraan" outlined item-text="name" item-value="_id" hide-details
-                v-model="form.type"></v-select>
+                v-model="form.type" :return-object="true"></v-select>
             </v-col>
             <v-col cols="4">
               <v-select :items="mechine" label="Kategori Kendaraan" outlined item-text="name" item-value="value"
@@ -48,7 +48,7 @@
             </v-col>
             <v-col cols="4">
               <v-select :items="locations" label="Lokasi" outlined item-text="kota" item-value="_id" hide-details
-                v-model="form.location"></v-select>
+                v-model="form.location" :return-object="true"></v-select>
             </v-col>
             <v-col cols="4">
               <v-select :items="variant" label="Variant" outlined item-text="name" item-value="value" hide-details
@@ -250,10 +250,10 @@ export default {
       try {
         await this.$axios.$put(this.$config.api + "/products/" + this.form.id, {
           name: this.form.vehicle_name,
-          merk: typeof this.form.merk === "object" ? this.form.merk._id : this.form.merk,
-          type: typeof this.form.type === "object" ? this.form.type._id : this.form.type,
+          merk: this.form.merk?._id ?? '',
+          type: this.form.type?._id ?? '',
           category: this.form.vehicle_category,
-          location: typeof this.form.location === "object" ? this.form.location._id : this.form.location,
+          location: this.form.location?._id ?? '',
 
           image: this.medias.map(item => item._id),
           sku_code: this.form.sku_code,

@@ -25,7 +25,6 @@
         <div class="mt-10">
           <p class="text-body-1 mb-2">Detail Produk</p>
           <div v-html="detailProduct.description" class="editor-content"></div>
-          <!-- <p class="text-body-2">{{ detailProduct.description }}</p> -->
           <iframe width="300" height="500" :src="detailProduct.instagram" frameborder="0"
             v-if="detailProduct.instagram"></iframe>
           <iframe width="300" height="500" :src="detailProduct.youtube" frameborder="0"
@@ -35,11 +34,11 @@
       <v-col md="4">
         <v-card rounded="xxl" style="position: sticky; top: 85px" class="pa-2">
           <v-card-text>
-            <p class="text-body-1 font-weight-medium mb-2">{{ detailProduct.name }}</p>
-            <div class="d-flex">
+            <p class="text-h6 font-weight-bold mb-2">{{ detailProduct.name }}</p>
+            <div class="d-flex" v-if="detailProduct.location_details">
               <v-icon size="14px" class="my-auto mr-2">mdi-map-marker</v-icon>
-              <p class="text-caption grey--text mb-0">
-                Kota {{ detailProduct.location_details.kota }}
+              <p class="text-caption black--text mb-0">
+                Kota {{ detailProduct.location_details?.kota }}
               </p>
             </div>
             <div v-if="detailProduct.price.current < detailProduct.price.normal" class="d-flex mt-3">
@@ -50,35 +49,35 @@
               <p class="text-h6 red--text font-weight-bold mb-0 mt-3">{{ detailProduct.price.current | currency }}</p>
             </div>
             <v-divider class="my-3"></v-divider>
-            <div class="d-flex justify-space-between pb-3">
-              <div class="d-flex">
+            <div class="d-flex justify-space-between pb-3" v-if="detailProduct.year">
+              <div class="d-flex" >
                 <v-icon class="my-auto mr-2 grey--text">mdi-calendar-month</v-icon>
                 <p class="my-auto grey--text text-body-2">Tahun</p>
               </div>
               <p class="my-auto text-body-2">{{ detailProduct.year }}</p>
             </div>
-            <div class="d-flex justify-space-between pb-3">
+            <div class="d-flex justify-space-between pb-3" v-if="detailProduct.km_of_use">
               <div class="d-flex">
                 <v-icon class="my-auto mr-2 grey--text">mdi-speedometer</v-icon>
                 <p class="my-auto grey--text text-body-2">Kilometer</p>
               </div>
               <p class="my-auto text-body-2">{{ detailProduct.km_of_use }} km</p>
             </div>
-            <div class="d-flex justify-space-between pb-3">
+            <div class="d-flex justify-space-between pb-3" v-if="detailProduct.merk_details">
               <div class="d-flex">
                 <v-icon class="my-auto mr-2 grey--text">mdi-motorbike</v-icon>
                 <p class="my-auto grey--text text-body-2">Merk</p>
               </div>
-              <p class="my-auto text-body-2">{{ detailProduct.merk_details.name }}</p>
+              <p class="my-auto text-body-2">{{ detailProduct.merk_details?.name }}</p>
             </div>
-            <div class="d-flex justify-space-between pb-3">
+            <div class="d-flex justify-space-between pb-3" v-if="detailProduct.cc">
               <div class="d-flex">
                 <v-icon class="my-auto mr-2 grey--text">mdi-engine-outline</v-icon>
                 <p class="my-auto grey--text text-body-2">Kapasitas Mesin</p>
               </div>
               <p class="my-auto text-body-2">{{ detailProduct.cc }} CC</p>
             </div>
-            <v-divider class="my-3"></v-divider>
+            <v-divider class="my-3" v-if="detailProduct.year || detailProduct.km_of_use || detailProduct.merk_details || detailProduct.cc"></v-divider>
             <p class="text-body-2 text-center">
               Untuk pemesanan langsung hubungi WhatsApp Admin
             </p>

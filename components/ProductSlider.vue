@@ -57,14 +57,14 @@
   
               <!-- Chips -->
               <div class="d-flex flex-wrap">
-                <v-chip outlined class="mr-1 mb-2" small>
+                <v-chip outlined class="mr-1 mb-2" small v-if="product.merk_details && product.merk_details?.name">
                   <p class="text-caption font-weight-medium my-auto">{{ product.merk_details?.name }}</p>
                 </v-chip>
-                <v-chip outlined class="mr-1 mb-2" small>
+                <v-chip outlined class="mr-1 mb-2" small v-if="product.year">
                   <v-icon size="16" class="mr-1 grey--text">mdi-calendar-month</v-icon>
                   <p class="text-caption font-weight-medium my-auto">{{ product.year }}</p>
                 </v-chip>
-                <v-chip outlined class="mr-1 mb-2" small>
+                <v-chip outlined class="mr-1 mb-2" small v-if="product.km_of_use">
                   <v-icon size="16" class="mr-1 grey--text">mdi-speedometer</v-icon>
                   <p class="text-caption font-weight-medium my-auto">{{ product.km_of_use }}</p>
                 </v-chip>

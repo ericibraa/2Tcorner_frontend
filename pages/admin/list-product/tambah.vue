@@ -7,53 +7,110 @@
         </v-card-title>
         <v-card-text class="pa-5">
           <v-row>
-            <v-col cols="12">
-              <v-text-field label="Nama Kendaraan" outlined hide-details v-model="form.vehicle_name"></v-text-field>
-            </v-col>
             <v-col cols="6">
-              <v-text-field label="Harga Kendaraan" outlined hide-details v-model="formattedPrice" prefix="Rp"
-                @keypress="onlyNumber"></v-text-field>
-            </v-col>
-            <v-col cols="6">
-              <v-text-field label="Harga Diskon Kendaraan" outlined hide-details v-model="formattedPricePromo"
-                prefix="Rp" @keypress="onlyNumber"></v-text-field>
-            </v-col>
-            <v-col cols="4">
-              <v-select :items="merks" label="Merek Kendaraan" outlined item-text="name" item-value="_id" hide-details
-                v-model="form.merk"></v-select>
-            </v-col>
-            <v-col cols="4">
-              <v-select :items="types" label="Tipe Kendaraan" outlined item-text="name" item-value="_id" hide-details
-                v-model="form.type"></v-select>
-            </v-col>
-            <v-col cols="4">
-              <v-select :items="mechine" label="Kategori Kendaraan" outlined item-text="name" item-value="value"
-                hide-details v-model="form.vehicle_category"></v-select>
-            </v-col>
-            <v-col cols="4">
-              <v-text-field label="CC Kendaraan" outlined hide-details v-model="form.vehicle_cc"
-                @keypress="onlyNumber"></v-text-field>
-            </v-col>
-            <v-col cols="4">
-              <v-text-field label="Tahun Kendaraan" outlined hide-details v-model="form.vehicle_years"
-                @keypress="onlyNumber"></v-text-field>
-            </v-col>
-            <v-col cols="4">
-              <v-text-field label="Jumlah KM Kendaraan" outlined hide-details v-model="form.vehicle_kilometers"
-                @keypress="onlyNumber"></v-text-field>
-            </v-col>
-            <v-col cols="4">
-              <v-select :items="grade" label="Grade Kendaraan" outlined item-text="name" hide-details
-                v-model="form.vehicle_grade"></v-select>
-            </v-col>
-            <v-col cols="4">
-              <v-select :items="locations" label="Lokasi" outlined item-text="kota" item-value="_id" hide-details
-                v-model="form.location"></v-select>
-            </v-col>
-            <v-col cols="4">
               <v-select :items="variant" label="Variant" outlined item-text="name" item-value="value" hide-details
                 v-model="form.variant"></v-select>
             </v-col>
+            <v-col cols="6">
+              <v-text-field label="Code Produk" outlined hide-details v-model="form.code"></v-text-field>
+            </v-col>
+            <template v-if="form.variant == 'vehicle'">
+              <v-col cols="12">
+                <v-text-field label="Nama Kendaraan" outlined hide-details v-model="form.vehicle_name"></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field label="Harga Kendaraan" outlined hide-details v-model="formattedPrice" prefix="Rp"
+                  @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field label="Harga Diskon Kendaraan" outlined hide-details v-model="formattedPricePromo"
+                  prefix="Rp" @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-select :items="merks" label="Merek Kendaraan" outlined item-text="name" item-value="_id" hide-details
+                  v-model="form.merk"></v-select>
+              </v-col>
+              <v-col cols="4">
+                <v-select :items="types" label="Tipe Kendaraan" outlined item-text="name" item-value="_id" hide-details
+                  v-model="form.type"></v-select>
+              </v-col>
+              <v-col cols="4">
+                <v-select :items="mechine" label="Kategori Kendaraan" outlined item-text="name" item-value="value"
+                  hide-details v-model="form.vehicle_category"></v-select>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field label="CC Kendaraan" outlined hide-details v-model="form.vehicle_cc"
+                  @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field label="Tahun Kendaraan" outlined hide-details v-model="form.vehicle_years"
+                  @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field label="Jumlah KM Kendaraan" outlined hide-details v-model="form.vehicle_kilometers"
+                  @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-select :items="grade" label="Grade Kendaraan" outlined item-text="name" hide-details
+                  v-model="form.vehicle_grade"></v-select>
+              </v-col>
+              <v-col cols="6">
+                <v-select :items="locations" label="Lokasi" outlined item-text="kota" item-value="_id" hide-details
+                  v-model="form.location"></v-select>
+              </v-col>
+            </template>
+            <!-- Sparepart -->
+            <template v-if="form.variant == 'sparepart'">
+              <v-col cols="12">
+                <v-text-field label="Nama Suku Cadang" outlined hide-details v-model="form.vehicle_name"></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field label="Harga Suku Cadang" outlined hide-details v-model="formattedPrice" prefix="Rp"
+                  @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field label="Harga Diskon Suku Cadang" outlined hide-details v-model="formattedPricePromo"
+                  prefix="Rp" @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-select :items="merks" label="Merek Suku Cadang" outlined item-text="name" item-value="_id"
+                  hide-details v-model="form.merk"></v-select>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field label="Tahun Suku Cadang" outlined hide-details v-model="form.vehicle_years"
+                  @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-select :items="locations" label="Lokasi" outlined item-text="kota" item-value="_id" hide-details
+                  v-model="form.location"></v-select>
+              </v-col>
+            </template>
+            <!-- Merchandise -->
+            <template v-if="form.variant == 'merchandise'">
+              <v-col cols="12">
+                <v-text-field label="Nama Merchandise" outlined hide-details v-model="form.vehicle_name"></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field label="Harga Merchandise" outlined hide-details v-model="formattedPrice" prefix="Rp"
+                  @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field label="Harga Diskon Merchandise" outlined hide-details v-model="formattedPricePromo"
+                  prefix="Rp" @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-select :items="merks" label="Merek Merchandise" outlined item-text="name" item-value="_id"
+                  hide-details v-model="form.merk"></v-select>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field label="Tahun Merchandise" outlined hide-details v-model="form.vehicle_years"
+                  @keypress="onlyNumber"></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-select :items="locations" label="Lokasi" outlined item-text="kota" item-value="_id" hide-details
+                  v-model="form.location"></v-select>
+              </v-col>
+            </template>
             <v-col cols="6">
               <v-text-field label="Link Instagram (Optional)" outlined hide-details
                 v-model="form.instagram"></v-text-field>
@@ -136,9 +193,10 @@ export default {
         location: '',
         image: '',
         description: '',
-        variant: '',
+        variant: 'vehicle',
         instagram: '',
-        youtube: ''
+        youtube: '',
+        code: ''
       },
       imageFile: false,
       medias: [],
@@ -304,7 +362,8 @@ export default {
           description: this.form.description,
           variant: this.form.variant,
           instagram: this.form.instagram,
-          youtube: this.form.youtube
+          youtube: this.form.youtube,
+          code: this.form.code
         })
         this.$router.push({ path: "/admin/list-product" });
       } catch (e) {
